@@ -6,6 +6,7 @@ import Szczurki.SimulationRunner.SimulationRunner;
 public class Program {
     public static void main(String[] args)
     {
+
         //wczytywanie konfiguracji z pliku
         var configuration = new Configuration("settings.json");
 
