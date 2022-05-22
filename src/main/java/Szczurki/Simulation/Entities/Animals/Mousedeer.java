@@ -2,8 +2,8 @@ package Szczurki.Simulation.Entities.Animals;
 
 public class Mousedeer extends Animal{
 
-    public Mousedeer(String a) {
-        super("Myszojeleń",a,8,2,6,3);
+    public Mousedeer(String name) {
+        super(name,8,2,6,3);
     }
 
 }

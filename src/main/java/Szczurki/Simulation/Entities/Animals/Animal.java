@@ -5,18 +5,18 @@ import Szczurki.Simulation.Entities.IUpdatable;
 
 public class Animal implements IEntity, IUpdatable {    //główna klasa po której dziedziczyć będą wszystkie zwierzęta
 
-    Animal(String a, String b, int c, int d, int e, int f) {
-        Species = a;
-        Name = b;
-        Speed = c;
-        Intelligence = d;
-        Strength = e;
-        Cooperation = f;
+    int speed,intelligence,strength,cooperation;
+    String name;
+
+    Animal(String name, int speed, int intelligence, int strength, int cooperation) {
+        this.name = name;
+        this.speed = speed;
+        this.intelligence = intelligence;
+        this.strength = strength;
+        this.cooperation = cooperation;
 
     }
 
-    public int Speed,Intelligence,Strength,Cooperation;
-    public String Species, Name;
 
     @Override
     public void update() {
