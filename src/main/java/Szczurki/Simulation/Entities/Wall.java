@@ -1,5 +1,7 @@
 package Szczurki.Simulation.Entities;
 
-public class Wall implements IEntity{
+import Szczurki.Simulation.Entities.Interfaces.IEntity;
+
+public class Wall implements IEntity {
 
 }

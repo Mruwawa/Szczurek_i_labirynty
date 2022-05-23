@@ -1,7 +1,7 @@
 package Szczurki.Simulation.Entities.Animals;
 
 public class Rat extends Animal {
-    public Rat(int y, int x, String name) {
-        super(y, x, name, 3, 4, 7, 6);
+    public Rat(int x, int y, String name) {
+        super(x, y, name, 3, 4, 7, 6);
     }
 }

@@ -1,13 +1,12 @@
 package Szczurki.Simulation.Entities;
 
-import Szczurki.Simulation.Entities.IEntity;
-
-import java.util.ArrayList;
-import java.util.List;
+import Szczurki.Simulation.Board;
+import Szczurki.Simulation.Entities.Interfaces.IEntity;
+import Szczurki.Simulation.Entities.Interfaces.IUpdatable;
 
 public class Guardian implements IEntity, IUpdatable {
     @Override
-    public void update(IEntity[][] otherEntities, IEntity[][] nextTurnEntities) {
+    public void update(Board board) {
 
     }
 }
