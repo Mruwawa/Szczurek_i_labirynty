@@ -14,5 +14,6 @@ public class Program {
         var simulationRunner = new SimulationRunner(configuration);
 
         simulationRunner.runSimulations();
+
     }
 }

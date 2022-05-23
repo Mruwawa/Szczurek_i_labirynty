@@ -1,8 +1,10 @@
-package Szczurki.Simulation.Entities;
+package Szczurki.Simulation.Entities.Interfaces;
+
+import Szczurki.Simulation.Board;
 
 import java.util.ArrayList;
 
 public interface IUpdatable {
     //interfejs pozwala na aktualizowanie stanu elementów rozmieszczonych w labiryncie
-    void update(IEntity[][] otherEntities, IEntity[][] nextTurnEntities);
+    void update(Board board);
 }

@@ -1,7 +1,7 @@
 package Szczurki.Simulation.Visualization;
 
 import Szczurki.Simulation.Entities.Animals.Rat;
-import Szczurki.Simulation.Entities.IEntity;
+import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Simulation.Entities.Wall;
 
 import java.util.concurrent.TimeUnit;
@@ -11,12 +11,14 @@ public class ConsoleRenderer implements IRenderer {
 
         horizontalLine(entities.length + 2, "   ", ConsoleColors.WHITE_BACKGROUND);
 
-        for (var row : entities) {
+        for (int y = 0; y < entities[0].length; y++) {
+
             System.out.print(ConsoleColors.WHITE_BACKGROUND);
             System.out.print("   ");
             System.out.print(ConsoleColors.RESET);
 
-            for (var entity : row) {
+            for (int x = 0; x < entities.length; x++) {
+                var entity= entities[x][y];
                 if (entity instanceof Rat) {
                     System.out.print(ConsoleColors.YELLOW_BACKGROUND);
                     System.out.print(" S ");
@@ -33,13 +35,15 @@ public class ConsoleRenderer implements IRenderer {
                 }
                 System.out.print("   ");
             }
+
             System.out.print(ConsoleColors.WHITE_BACKGROUND);
             System.out.print("   ");
             System.out.print(ConsoleColors.RESET);
             System.out.print("\n");
-        }
-        horizontalLine(entities.length + 2, "   ", ConsoleColors.WHITE_BACKGROUND);
 
+        }
+
+        horizontalLine(entities.length + 2, "   ", ConsoleColors.WHITE_BACKGROUND);
 
         try {
             TimeUnit.MILLISECONDS.sleep(500);

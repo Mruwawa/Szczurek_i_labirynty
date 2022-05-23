@@ -1,24 +1,25 @@
 package Szczurki.Simulation.Entities.Animals;
 
-import Szczurki.Simulation.Entities.IEntity;
-import Szczurki.Simulation.Entities.IUpdatable;
-import Szczurki.Simulation.Entities.Vector;
+import Szczurki.Simulation.Board;
+import Szczurki.Simulation.Entities.Interfaces.IEntity;
+import Szczurki.Simulation.Entities.Interfaces.IUpdatable;
+import Szczurki.Utilities.Vector;
 import Szczurki.Simulation.Entities.Wall;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 abstract class Animal implements IEntity, IUpdatable {
-    //główna klasa po której dziedziczyć będą wszystkie zwierzęta
-    int speed, intelligence, strength, cooperation;
-    String name;
-    protected final Vector pos;
-    protected final Vector lastPos;
 
-    Animal(int y, int x, String name, int speed, int intelligence, int strength, int cooperation) {
-        pos = new Vector(y, x);
-        lastPos = pos;
+    //główna klasa po której dziedziczyć będą wszystkie zwierzęta
+    final int speed, intelligence, strength, cooperation;
+    final String name;
+    protected final Vector pos;
+    protected final Vector lastMove;
+
+    Animal(int x, int y, String name, int speed, int intelligence, int strength, int cooperation) {
+        pos = new Vector(x, y);
+        lastMove = Vector.ZERO;
+
         this.name = name;
         this.speed = speed;
         this.intelligence = intelligence;
@@ -27,82 +28,73 @@ abstract class Animal implements IEntity, IUpdatable {
     }
 
     @Override
-    public void update(IEntity[][] entities, IEntity[][] nextTurnEntities) {
+    public void update(Board board) {
 
-        var nextMove = chooseNextMove(entities);
+        var nextMove = chooseNextMove(board);
+
         if (nextMove == null) {
             System.out.println("Szczur wyszedł");
+            board.remove(this, pos);
             return;
         }
 
-        nextTurnEntities[pos.y + nextMove.y][pos.x + nextMove.x] = this;
-
-        lastPos.x = pos.x;
-        lastPos.y = pos.y;
-
-        pos.y += nextMove.y;
-        pos.x += nextMove.x;
-
+        board.move(pos, nextMove);
+        lastMove.set(nextMove);
     }
 
-    protected Vector chooseNextMove(IEntity[][] entities) {
+    protected Vector chooseNextMove(Board board) {
         //deklarujemy zbiór możliwych ruchów
-        var possibleMoves = new ArrayList<>(List.of(new Vector[]
-                {
-                        new Vector(0, 1),
-                        new Vector(-1, 1),
-                        new Vector(-1, 0),
-                        new Vector(-1, -1),
-                        new Vector(0, -1),
-                        new Vector(1, -1),
-                        new Vector(1, 0),
-                        new Vector(1, 1)
-                }));
+        var possibleMoves = Vector.getAllDirections();
+        //usuwamy z nich odwrotność poprzedniego ruchu, żeby się nie cofać
+        possibleMoves.remove(lastMove.reversed());
 
         //jeśli znajdujemy się obok wyjścia to wykonujemy ten ruch i wychodzimy z labiryntu
         //zwracamy null, żeby odróżnić ten typ ruchu od zwykłego ruchu
         //oraz dlatego że nie możemy wykroczyć poza zakres planszy (arraya entities)
         for (var move : possibleMoves) {
-            if (pos.y + move.y < 0 ||
-                    pos.y + move.y >= entities.length ||
-                    pos.x + move.x < 0 ||
-                    pos.x + move.x >= entities[0].length) {
+            if (board.isOutside(Vector.add(pos, move))) {
                 return null;
             }
         }
 
         //wybieramy preferowany przez zwierzaka ruch (każda klasa ma inną implementację)
         //i jeżeli możemy go wykonać to to robimy
-        var preferredMove = choosePreferredMove(entities);
-        if (preferredMove != null && canMove(preferredMove, entities)) {
+        var preferredMove = choosePreferredMove(board.map);
+        if (preferredMove != null && canMove(preferredMove, board.map)) {
             return preferredMove;
         }
 
         //jeżeli nie jesteśmy koło wyjścia, oraz nie możemy wykonać preferowanego ruchu to losujemy nowy
         do {
             var random = new Random();
-            var candidatePositionIndex = random.nextInt(possibleMoves.size());
-            var candidatePosition = possibleMoves.get(candidatePositionIndex);
+            var candidateMoveIndex = random.nextInt(possibleMoves.size());
+            var candidateMove = possibleMoves.get(candidateMoveIndex);
 
             //usuwamy wybrany ruch z możliwych ruchów, żeby ich nie powtarzać
-            possibleMoves.remove(candidatePositionIndex);
+            possibleMoves.remove(candidateMoveIndex);
 
-            if (canMove(candidatePosition, entities)) {
-                return candidatePosition;
+            if (canMove(candidateMove, board.map)) {
+                return candidateMove;
             }
 
         } while (possibleMoves.size() != 0);
+
+        //Jeżeli nie możemy się ruszyć to próbujemy się cofnąć
+        if (canMove(lastMove.reversed(), board.map))
+            return lastMove.reversed();
 
         //jeżeli skończą nam się możliwe ruchy to stoimy w miejscu
         return new Vector(0, 0);
     }
 
-    protected boolean canMove(Vector candidatePosition, IEntity[][] entities) {
+    protected boolean canMove(Vector moveBy, IEntity[][] entities) {
+        var chosenTile = entities[pos.x + moveBy.x][pos.y + moveBy.y];
 
-        //jeżeli na miejscu w które chcemy isc stoi sciana to nie możemy tam isc
-        if (entities[pos.y + candidatePosition.y][pos.x + candidatePosition.x] instanceof Wall) {
+        //jeżeli natrafimy na inne zwierze lub na ścianę to nie możemy tam pójść
+        if (chosenTile instanceof Wall || chosenTile instanceof Animal) {
             return false;
         }
+
         return true;
     }
 
