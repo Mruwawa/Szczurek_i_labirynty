@@ -1,6 +1,6 @@
 package Szczurki.Simulation.Visualization;
 
-import Szczurki.Simulation.Entities.Animals.Rat;
+import Szczurki.Simulation.Entities.Animals.*;
 import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Simulation.Entities.Wall;
 
@@ -8,6 +8,8 @@ import java.util.concurrent.TimeUnit;
 
 public class ConsoleRenderer implements IRenderer {
     public void render(IEntity[][] entities) {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
 
         horizontalLine(entities.length + 2, "   ", ConsoleColors.WHITE_BACKGROUND);
 
@@ -26,6 +28,37 @@ public class ConsoleRenderer implements IRenderer {
 
                     continue;
                 }
+                if (entity instanceof Mousedeer) {
+                    System.out.print(ConsoleColors.BLUE_BACKGROUND);
+                    System.out.print("MSJ");//msj - myszojelen
+                    System.out.print(ConsoleColors.RESET);
+
+                    continue;
+                }
+                if (entity instanceof Gerbil) {
+                    System.out.print(ConsoleColors.PURPLE_BACKGROUND);
+                    System.out.print(" G ");
+                    System.out.print(ConsoleColors.RESET);
+
+                    continue;
+                }
+
+                if (entity instanceof Hamster) {
+                    System.out.print(ConsoleColors.CYAN_BACKGROUND);
+                    System.out.print(" H ");
+                    System.out.print(ConsoleColors.RESET);
+
+                    continue;
+                }
+
+                if (entity instanceof Mouse) {
+                    System.out.print(ConsoleColors.GREEN_BACKGROUND);
+                    System.out.print(" M ");
+                    System.out.print(ConsoleColors.RESET);
+
+                    continue;
+                }
+
                 if (entity instanceof Wall) {
                     System.out.print(ConsoleColors.BLACK_BACKGROUND);
                     System.out.print(ConsoleColors.BLACK);
@@ -33,7 +66,9 @@ public class ConsoleRenderer implements IRenderer {
                     System.out.print(ConsoleColors.RESET);
                     continue;
                 }
+                System.out.print(ConsoleColors.WHITE_BACKGROUND);
                 System.out.print("   ");
+                System.out.print(ConsoleColors.RESET);
             }
 
             System.out.print(ConsoleColors.WHITE_BACKGROUND);
@@ -46,7 +81,7 @@ public class ConsoleRenderer implements IRenderer {
         horizontalLine(entities.length + 2, "   ", ConsoleColors.WHITE_BACKGROUND);
 
         try {
-            TimeUnit.MILLISECONDS.sleep(500);
+            TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
