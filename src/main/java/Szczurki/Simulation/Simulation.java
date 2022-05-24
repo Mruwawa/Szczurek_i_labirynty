@@ -4,6 +4,8 @@ import Szczurki.Configuration.SimulationSettings;
 import Szczurki.Simulation.Visualization.ConsoleRenderer;
 import Szczurki.Simulation.Visualization.IRenderer;
 
+import java.io.FileNotFoundException;
+
 public class Simulation {
 
     private final Board board;

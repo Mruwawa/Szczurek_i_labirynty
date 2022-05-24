@@ -6,15 +6,16 @@ import Szczurki.Configuration.SimulationSettings;
 import Szczurki.Simulation.Entities.Animals.Rat;
 import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Simulation.Entities.Interfaces.IUpdatable;
+import Szczurki.Simulation.Entities.Wall;
 import Szczurki.Utilities.Vector;
 
 import java.util.ArrayList;
 
 public class Board {
 
-    public IEntity[][] map;
     public final ArrayList<IUpdatable> updatableEntities;
     private final ArrayList<IUpdatable> removedEntities;
+    public IEntity[][] map;
     private final IMapReader _mapReader;
     private final SimulationSettings _settings;
 
@@ -29,17 +30,45 @@ public class Board {
 
     public void initializeEntities() {
 
+
         map = _mapReader.getMap(_settings);
 
         var klapcio = new Rat(1, 4, "Kłapcio");
+
         var deedee = new Rat(6, 1, "Dee Dee");
 
         map[1][4] = klapcio;
-        map[6][1] = deedee;
-
         updatableEntities.add(klapcio);
         updatableEntities.add(deedee);
 
+
+        map[6][1] = deedee;
+
+
+        //docelowo te ściany będą wczywywane z pliku
+     //   map[0][5] = new Wall();
+     //   map[1][5] = new Wall();
+     //   map[2][5] = new Wall();
+     //   map[3][5] = new Wall();
+     //   map[4][5] = new Wall();
+     //   map[5][5] = new Wall();
+     //   map[6][5] = new Wall();
+
+     //   map[0][0] = new Wall();
+     //   map[0][1] = new Wall();
+     //   map[0][2] = new Wall();
+     //   map[0][3] = new Wall();
+     //   map[0][4] = new Wall();
+     //   map[0][5] = new Wall();
+
+
+     //   map[1][3] = new Wall();
+     //   map[2][3] = new Wall();
+     //   map[3][3] = new Wall();
+     //   map[4][3] = new Wall();
+     //   map[5][3] = new Wall();
+     //   map[6][4] = new Wall();
+     //   map[6][3] = new Wall();
     }
 
     public boolean isOutside(Vector vector) {
