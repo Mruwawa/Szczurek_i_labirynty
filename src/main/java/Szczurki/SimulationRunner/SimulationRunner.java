@@ -3,6 +3,8 @@ package Szczurki.SimulationRunner;
 import Szczurki.Configuration.IConfiguration;
 import Szczurki.Simulation.Simulation;
 
+import java.io.FileNotFoundException;
+
 public class SimulationRunner {
 
     private final IConfiguration _config;
