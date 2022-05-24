@@ -21,14 +21,12 @@ public class Vector {
         return otherVector.x == this.x && otherVector.y == this.y;
     }
 
-    public void set(Vector newValue)
-    {
+    public void set(Vector newValue) {
         this.x = newValue.x;
         this.y = newValue.y;
     }
 
-    public void add(Vector other)
-    {
+    public void add(Vector other) {
         this.x += other.x;
         this.y += other.y;
     }
@@ -42,26 +40,38 @@ public class Vector {
         return new Vector(-this.x, -this.y);
     }
 
-    public Vector copy()
-    {
+    public Vector copy() {
         return new Vector(this.x, this.y);
     }
 
-    public static Vector ZERO = new Vector(0, 0);
-    public static Vector UP = new Vector(0, -1);
-    public static Vector DOWN = new Vector(0, 1);
-    public static Vector LEFT = new Vector(-1, 0);
-    public static Vector RIGHT = new Vector(1, 0);
+    public static Vector ZERO() {
+        return new Vector(0, 0);
+    }
+
+    public static Vector UP() {
+        return new Vector(0, -1);
+    }
+
+    public static Vector DOWN() {
+        return new Vector(0, 1);
+    }
+
+    public static Vector LEFT() {
+        return new Vector(-1, 0);
+    }
+
+    public static Vector RIGHT() {
+        return new Vector(1, 0);
+    }
 
     public static ArrayList<Vector> getAllDirections() {
         return new ArrayList<Vector>(List.of(new Vector[]
                 {
-                        UP, DOWN, LEFT, RIGHT
+                        UP(), DOWN(), LEFT(), RIGHT()
                 }));
     }
 
-    public static Vector add(Vector vector1, Vector vector2)
-    {
+    public static Vector add(Vector vector1, Vector vector2) {
         return new Vector(vector1.x + vector2.x, vector1.y + vector2.y);
     }
 

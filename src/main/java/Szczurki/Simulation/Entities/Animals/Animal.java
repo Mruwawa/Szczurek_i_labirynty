@@ -8,7 +8,7 @@ import Szczurki.Simulation.Entities.Wall;
 
 import java.util.Random;
 
-abstract class Animal implements IEntity, IUpdatable {
+public abstract class Animal implements IEntity, IUpdatable {
 
     //główna klasa po której dziedziczyć będą wszystkie zwierzęta
     final int speed, intelligence, strength, cooperation;
@@ -18,7 +18,7 @@ abstract class Animal implements IEntity, IUpdatable {
 
     Animal(int x, int y, String name, int speed, int intelligence, int strength, int cooperation) {
         pos = new Vector(x, y);
-        lastMove = Vector.ZERO;
+        lastMove = Vector.ZERO();
 
         this.name = name;
         this.speed = speed;
@@ -33,7 +33,7 @@ abstract class Animal implements IEntity, IUpdatable {
         var nextMove = chooseNextMove(board);
 
         if (nextMove == null) {
-            System.out.println("Szczur wyszedł");
+            System.out.println("Zwierzątko o imieniu" + this.name + " wyszło z labiryntu!");
             board.remove(this, pos);
             return;
         }
