@@ -11,7 +11,7 @@ public class Simulation {
     private final SimulationSettings _settings;
     private final IRenderer _renderer;
 
-    public Simulation(SimulationSettings settings) {
+    public Simulation(SimulationSettings settings){
         _settings = settings;
         board = new Board(settings);
         //docelowo renderer będzie wybierany w ustawieniach i przekazywany przez konstruktor
