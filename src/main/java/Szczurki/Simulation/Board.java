@@ -18,27 +18,21 @@ public class Board {
     private final IMapReader _mapReader;
     private final SimulationSettings _settings;
 
+    private final IEntityPositioner _entityPositioner;
 
     public Board(SimulationSettings settings) {
         updatableEntities = new ArrayList<>();
         removedEntities = new ArrayList<>();
         _mapReader = new MapReader();
         _settings = settings;
+        _entityPositioner = new EntityPositioner(settings);
     }
 
 
     public void initializeEntities() {
 
         map = _mapReader.getMap(_settings);
-
-        var klapcio = new Rat(1, 4, "Kłapcio");
-        var deedee = new Rat(6, 1, "Dee Dee");
-
-        map[1][4] = klapcio;
-        map[6][1] = deedee;
-
-        updatableEntities.add(klapcio);
-        updatableEntities.add(deedee);
+        _entityPositioner.placeEntities(map, updatableEntities);
 
     }
 
