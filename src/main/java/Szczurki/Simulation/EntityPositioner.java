@@ -16,9 +16,8 @@ public class EntityPositioner implements IEntityPositioner {
 
     public EntityPositioner(SimulationSettings settings) {
         _settings = settings;
-        _possibleNames = getNameList();
+        _possibleNames = getPossibleNames();
     }
-
 
     @Override
     public void placeEntities(IEntity[][] map, List<IUpdatable> updatableEntities) {
@@ -28,9 +27,8 @@ public class EntityPositioner implements IEntityPositioner {
             for (int i = 0; i < count; i++) {
                 Vector place;
                 do {
-                    place = getRandomVector(_settings.mapWidth, _settings.mapHeight);
+                    place = Vector.getRandomVector(_settings.mapWidth, _settings.mapHeight);
                 } while (map[place.x][place.y] != null);
-
 
                 Animal animal = null;
 
@@ -56,21 +54,10 @@ public class EntityPositioner implements IEntityPositioner {
                 updatableEntities.add(animal);
             }
         });
-
-    }
-
-
-    private Vector getRandomVector(int maxX, int maxY) {
-        var random = new Random();
-
-        var chosenX = random.nextInt(maxX);
-        var chosenY = random.nextInt(maxY);
-
-        return new Vector(chosenX, chosenY);
     }
 
     private String pickName() {
-        if (_possibleNames.size() == 0) _possibleNames = getNameList();
+        if (_possibleNames.size() == 0) _possibleNames = getPossibleNames();
 
         var random = new Random();
         var index = random.nextInt(_possibleNames.size());
@@ -81,7 +68,7 @@ public class EntityPositioner implements IEntityPositioner {
     }
 
 
-    private ArrayList<String> getNameList() {
+    private ArrayList<String> getPossibleNames() {
         return new ArrayList<>(List.of(new String[]{
                 "Kłapcio",
                 "Dee dee",
@@ -89,7 +76,7 @@ public class EntityPositioner implements IEntityPositioner {
                 "Reksio",
                 "Derpy",
                 "Azor",
-                "Jest 23 a ja musze wymyslac nazwy zwierzat",
+                "Bambi",
                 "Mario",
                 "Luigi",
                 "Waluigi"}));
