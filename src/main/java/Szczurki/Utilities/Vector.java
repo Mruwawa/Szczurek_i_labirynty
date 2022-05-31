@@ -2,6 +2,7 @@ package Szczurki.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Vector {
     public int x = 0, y = 0;
@@ -73,6 +74,15 @@ public class Vector {
 
     public static Vector add(Vector vector1, Vector vector2) {
         return new Vector(vector1.x + vector2.x, vector1.y + vector2.y);
+    }
+
+    public static Vector getRandomVector(int maxX, int maxY) {
+        var random = new Random();
+
+        var chosenX = random.nextInt(maxX);
+        var chosenY = random.nextInt(maxY);
+
+        return new Vector(chosenX, chosenY);
     }
 
 }
