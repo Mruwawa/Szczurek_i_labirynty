@@ -3,8 +3,7 @@ package Szczurki;
 import Szczurki.Configuration.Configuration;
 import Szczurki.SimulationRunner.SimulationRunner;
 
-public class
-Program {
+public class Program {
     public static void main(String[] args)
     {
 
