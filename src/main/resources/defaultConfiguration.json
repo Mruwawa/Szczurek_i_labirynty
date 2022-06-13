@@ -14,9 +14,9 @@
   ],
   "simulationSettingsList": [
     {
-      "fileName": "labirynt 15x15.txt",
-      "mapHeight": 15,
-      "mapWidth": 15,
+      "fileName": "labirynt 20x20.txt",
+      "mapHeight": 20,
+      "mapWidth": 20,
       "turnCount": 1000,
       "animalCounts": {
         "hamsters": 2,

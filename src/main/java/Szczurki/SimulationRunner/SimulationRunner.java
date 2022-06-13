@@ -1,13 +1,14 @@
 package Szczurki.SimulationRunner;
 
+import Szczurki.Configuration.ConfigurationData;
 import Szczurki.Configuration.IConfiguration;
 import Szczurki.Simulation.Simulation;
 
 public class SimulationRunner {
 
-    private final IConfiguration _config;
+    private final ConfigurationData _config;
 
-    public SimulationRunner(IConfiguration configuration)
+    public SimulationRunner(ConfigurationData configuration)
     {
         _config = configuration;
     }

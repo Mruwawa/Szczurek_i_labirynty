@@ -27,7 +27,7 @@ public class EntityPositioner implements IEntityPositioner {
             for (int i = 0; i < count; i++) {
                 Vector place;
                 do {
-                    place = Vector.getRandomVector(_settings.mapWidth, _settings.mapHeight);
+                    place = Vector.getRandomVector(map[0].length, map.length);
                 } while (map[place.x][place.y] != null);
 
                 Animal animal = null;

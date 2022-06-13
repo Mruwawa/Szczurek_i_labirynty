@@ -1,5 +1,6 @@
 package Szczurki.Configuration;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import static java.util.Map.entry;
@@ -18,5 +19,6 @@ public class SimulationSettings {
             entry("mousedeer", 2),
             entry("rats", 2)
     );
+    public ArrayList<String> animalNames;
 
 }
