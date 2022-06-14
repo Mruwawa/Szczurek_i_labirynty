@@ -1,4 +1,4 @@
-package Szczurki.Simulation;
+package Szczurki.Simulation.Setup;
 
 import Szczurki.Configuration.SimulationSettings;
 import Szczurki.Simulation.Entities.Animals.*;
@@ -16,7 +16,7 @@ public class EntityPositioner implements IEntityPositioner {
 
     public EntityPositioner(SimulationSettings settings) {
         _settings = settings;
-        _possibleNames = getPossibleNames();
+        _possibleNames = new ArrayList<>();
     }
 
     @Override
@@ -57,7 +57,7 @@ public class EntityPositioner implements IEntityPositioner {
     }
 
     private String pickName() {
-        if (_possibleNames.size() == 0) _possibleNames = getPossibleNames();
+        if (_possibleNames.size() == 0) _possibleNames = new ArrayList<>(_settings.animalNames);
 
         var random = new Random();
         var index = random.nextInt(_possibleNames.size());
@@ -65,20 +65,5 @@ public class EntityPositioner implements IEntityPositioner {
         _possibleNames.remove(pickedName);
 
         return pickedName;
-    }
-
-
-    private ArrayList<String> getPossibleNames() {
-        return new ArrayList<>(List.of(new String[]{
-                "Kłapcio",
-                "Dee dee",
-                "Remi",
-                "Reksio",
-                "Derpy",
-                "Azor",
-                "Bambi",
-                "Mario",
-                "Luigi",
-                "Waluigi"}));
     }
 }

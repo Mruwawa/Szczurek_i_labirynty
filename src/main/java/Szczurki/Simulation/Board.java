@@ -1,9 +1,10 @@
 package Szczurki.Simulation;
 
-import Szczurki.Configuration.IMapReader;
-import Szczurki.Configuration.MapReader;
+import Szczurki.Simulation.Setup.EntityPositioner;
+import Szczurki.Simulation.Setup.IEntityPositioner;
+import Szczurki.Simulation.Setup.IMapReader;
+import Szczurki.Simulation.Setup.MapReader;
 import Szczurki.Configuration.SimulationSettings;
-import Szczurki.Simulation.Entities.Animals.Rat;
 import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Simulation.Entities.Interfaces.IUpdatable;
 import Szczurki.Utilities.Vector;

@@ -4,6 +4,8 @@ import Szczurki.Configuration.SimulationSettings;
 import Szczurki.Simulation.Visualization.ConsoleRenderer;
 import Szczurki.Simulation.Visualization.IRenderer;
 
+import java.util.List;
+
 public class Simulation {
 
     private final Board board;
@@ -14,7 +16,6 @@ public class Simulation {
     public Simulation(SimulationSettings settings){
         _settings = settings;
         board = new Board(settings);
-        //docelowo renderer będzie wybierany w ustawieniach i przekazywany przez konstruktor
         _renderer = new ConsoleRenderer();
 
         board.initializeEntities();
