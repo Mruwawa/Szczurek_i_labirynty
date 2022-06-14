@@ -41,6 +41,18 @@ public class Vector {
         return new Vector(-this.x, -this.y);
     }
 
+    public Vector turnLeft() {
+        int y=this.x;
+        int x=-this.y;
+        return new Vector(x,y);
+    }
+
+    public Vector turnRight() {
+        int x=this.y;
+        int y=-this.x;
+        return new Vector(x,y);
+    }
+
     public Vector copy() {
         return new Vector(this.x, this.y);
     }
