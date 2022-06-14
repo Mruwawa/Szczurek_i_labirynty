@@ -16,7 +16,6 @@ public class Board {
     public IEntity[][] map;
     public final ArrayList<IUpdatable> updatableEntities;
     private final ArrayList<IUpdatable> removedEntities;
-
     private final IMapReader _mapReader;
     private final SimulationSettings _settings;
 

@@ -2,7 +2,6 @@ package Szczurki.Simulation.Setup;
 
 import Szczurki.Configuration.SimulationSettings;
 import Szczurki.Simulation.Entities.Animals.*;
-import Szczurki.Simulation.Entities.Guardian;
 import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Simulation.Entities.Interfaces.IUpdatable;
 import Szczurki.Utilities.Vector;
@@ -22,43 +21,39 @@ public class EntityPositioner implements IEntityPositioner {
 
     @Override
     public void placeEntities(IEntity[][] map, List<IUpdatable> updatableEntities) {
-//umieszczenie strażnika na mapie
-
 
         _settings.animalCounts.forEach((animalName, count) ->
         {
-            //rozmieszczenie zwierząt na mapie
             for (int i = 0; i < count; i++) {
-
                 Vector place;
                 do {
                     place = Vector.getRandomVector(map[0].length, map.length);
                 } while (map[place.x][place.y] != null);
 
-                Animal animal = switch (animalName) {
-                    case "gerbils" -> new Gerbil(place.x, place.y, pickName());
-                    case "hamsters" -> new Hamster(place.x, place.y, pickName());
-                    case "mice" -> new Mouse(place.x, place.y, pickName());
-                    case "mousedeer" -> new Mousedeer(place.x, place.y, pickName());
-                    case "rats" -> new Rat(place.x, place.y, pickName());
-                    default -> null;
-                };
+                Animal animal = null;
+
+                switch (animalName) {
+                    case "gerbils":
+                        animal = new Gerbil(place.x, place.y, pickName());
+                        break;
+                    case "hamsters":
+                        animal = new Hamster(place.x, place.y, pickName());
+                        break;
+                    case "mice":
+                        animal = new Mouse(place.x, place.y, pickName());
+                        break;
+                    case "mousedeer":
+                        animal = new Mousedeer(place.x, place.y, pickName());
+                        break;
+                    case "rats":
+                        animal = new Rat(place.x, place.y, pickName());
+                        break;
+                }
 
                 map[place.x][place.y] = animal;
                 updatableEntities.add(animal);
             }
         });
-
-        Vector guardianPlace;
-
-        do {
-            guardianPlace = Vector.getRandomVector(_settings.mapWidth, _settings.mapHeight);
-        } while (map[guardianPlace.x][guardianPlace.y] != null);
-
-        Guardian guardian = new Guardian(guardianPlace.x, guardianPlace.y);
-
-        map[guardianPlace.x][guardianPlace.y] = guardian;
-        updatableEntities.add(guardian);
     }
 
     private String pickName() {
@@ -71,5 +66,4 @@ public class EntityPositioner implements IEntityPositioner {
 
         return pickedName;
     }
-
 }
