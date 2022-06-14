@@ -6,6 +6,7 @@ import Szczurki.Simulation.Entities.Interfaces.IUpdatable;
 import Szczurki.Utilities.Vector;
 import Szczurki.Simulation.Entities.Wall;
 
+import java.util.Objects;
 import java.util.Random;
 
 public abstract class Animal implements IEntity, IUpdatable {
@@ -13,10 +14,11 @@ public abstract class Animal implements IEntity, IUpdatable {
     //główna klasa po której dziedziczyć będą wszystkie zwierzęta
     final int speed, intelligence, strength, cooperation;
     final String name;
+    final String preferredMove;
     protected final Vector pos;
     protected final Vector lastMove;
 
-    Animal(int x, int y, String name, int speed, int intelligence, int strength, int cooperation) {
+    Animal(int x, int y, String name, int speed, int intelligence, int strength, int cooperation, String preferredMove) {
         pos = new Vector(x, y);
         lastMove = Vector.ZERO();
 
@@ -25,6 +27,7 @@ public abstract class Animal implements IEntity, IUpdatable {
         this.intelligence = intelligence;
         this.strength = strength;
         this.cooperation = cooperation;
+        this.preferredMove = preferredMove;
     }
 
     @Override
@@ -59,7 +62,7 @@ public abstract class Animal implements IEntity, IUpdatable {
 
         //wybieramy preferowany przez zwierzaka ruch (każda klasa ma inną implementację)
         //i jeżeli możemy go wykonać to to robimy
-        var preferredMove = choosePreferredMove(board.map);
+        var preferredMove = choosePreferredMove(board.map,this.preferredMove);
         if (preferredMove != null && canMove(preferredMove, board.map)) {
             return preferredMove;
         }
@@ -98,7 +101,32 @@ public abstract class Animal implements IEntity, IUpdatable {
         return true;
     }
 
-    protected Vector choosePreferredMove(IEntity[][] entities) {
+    protected Vector choosePreferredMove(IEntity[][] entities,String preferredMove) {
+
+        if(Objects.equals(preferredMove, "right")){
+            return lastMove.turnRight();
+        }
+        if(Objects.equals(preferredMove, "left")){
+            return lastMove.turnLeft();
+        }
+        if(Objects.equals(preferredMove, "straight")){
+            return lastMove;
+        }
+        if(this.preferredMove=="waiting"){
+            Random chance = new Random();
+            int chanceForWaiting = chance.nextInt(101);
+            if(chanceForWaiting<26){
+                return new Vector(0,0);
+            }
+            return null;
+        }
+        if(this.preferredMove=="reverse"){
+            Random chance = new Random();
+            int chanceForTurningBack = chance.nextInt(101);
+            if(chanceForTurningBack<26){
+                return lastMove.reversed();
+            }
+        }
         return null;
     }
 
