@@ -32,7 +32,7 @@ public class EntityPositioner implements IEntityPositioner {
 
                 Vector place;
                 do {
-                    place = Vector.getRandomVector(map[0].length, map.length);
+                    place = Vector.getRandomVector(map.length, map[0].length);
                 } while (map[place.x][place.y] != null);
 
                 Animal animal = null;
@@ -60,16 +60,18 @@ public class EntityPositioner implements IEntityPositioner {
             }
         });
 
-        Vector guardianPlace;
+        for (int i = 0; i < _settings.guardianCount; i++) {
+            Vector guardianPlace;
+            do {
+                guardianPlace = Vector.getRandomVector(_settings.mapWidth, _settings.mapHeight);
+            } while (map[guardianPlace.x][guardianPlace.y] != null);
 
-        do {
-            guardianPlace = Vector.getRandomVector(_settings.mapWidth, _settings.mapHeight);
-        } while (map[guardianPlace.x][guardianPlace.y] != null);
+            Guardian guardian = new Guardian(guardianPlace.x, guardianPlace.y);
 
-        Guardian guardian = new Guardian(guardianPlace.x, guardianPlace.y);
+            map[guardianPlace.x][guardianPlace.y] = guardian;
+            updatableEntities.add(guardian);
+        }
 
-        map[guardianPlace.x][guardianPlace.y] = guardian;
-        updatableEntities.add(guardian);
     }
 
     private String pickName() {

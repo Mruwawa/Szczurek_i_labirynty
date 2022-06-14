@@ -26,6 +26,10 @@ public class Simulation {
 
         for (int i = 0; i < _settings.turnCount; i++) {
             turn();
+            if(board.updatableEntities.size() == 0) {
+                System.out.println("Symulacja zakończona");
+                break;
+            }
         }
     }
 

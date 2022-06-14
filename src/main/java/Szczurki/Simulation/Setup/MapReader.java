@@ -2,6 +2,7 @@ package Szczurki.Simulation.Setup;
 
 import Szczurki.Configuration.SimulationSettings;
 import Szczurki.Simulation.Entities.Interfaces.IEntity;
+import Szczurki.Simulation.Entities.Obstacle;
 import Szczurki.Simulation.Entities.Wall;
 
 import java.io.BufferedReader;
@@ -31,6 +32,10 @@ public class MapReader implements IMapReader {
                 for (int j = 0; j < settings.mapWidth; ++j) {
                     if (labirynth[i].charAt(j) == '#') {
                         map[j][i] = new Wall();
+                    }
+
+                    if (labirynth[i].charAt(j) == '@') {
+                        map[j][i] = new Obstacle(10, 10);
                     }
 
                 }

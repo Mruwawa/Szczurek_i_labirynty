@@ -18,6 +18,7 @@
       "mapHeight": 20,
       "mapWidth": 20,
       "turnCount": 1000,
+      "guardianCount": 1,
       "animalCounts": {
         "hamsters": 2,
         "gerbils": 2,

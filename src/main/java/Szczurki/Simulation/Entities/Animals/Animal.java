@@ -4,19 +4,22 @@ import Szczurki.Simulation.Board;
 import Szczurki.Simulation.Entities.Guardian;
 import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Simulation.Entities.Interfaces.IUpdatable;
+import Szczurki.Simulation.Entities.Obstacle;
 import Szczurki.Utilities.Vector;
 import Szczurki.Simulation.Entities.Wall;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
 public abstract class Animal implements IEntity, IUpdatable {
 
     //główna klasa po której dziedziczyć będą wszystkie zwierzęta
-    final int speed, intelligence, strength, cooperation;
+    protected final int speed, intelligence, strength, cooperation;
     final String name;
     protected final Vector pos;
     protected final Vector lastMove;
+    protected ArrayList<Animal> neighbours;
 
     Animal(int x, int y, String name, int speed, int intelligence, int strength, int cooperation) {
         pos = new Vector(x, y);
@@ -35,9 +38,20 @@ public abstract class Animal implements IEntity, IUpdatable {
         var nextMove = chooseNextMove(board);
 
         if (nextMove == null) {
-            System.out.println("Zwierzątko o imieniu" + this.name + " wyszło z labiryntu!");
+            System.out.println(this.toString() + " o imieniu " + this.name + " wyszedł z labiryntu!");
             board.remove(this, pos);
             return;
+        }
+
+        if(board.map[pos.x + nextMove.x][pos.y + nextMove.y] instanceof Obstacle)
+        {
+            var obstacle = (Obstacle)board.map[pos.x + nextMove.x][pos.y + nextMove.y];
+            if(obstacle.isActive()) {
+                this.neighbours = getNeighbours(board);
+
+                obstacle.interact(this);
+                return;
+            }
         }
 
         board.move(pos, nextMove);
@@ -104,4 +118,30 @@ public abstract class Animal implements IEntity, IUpdatable {
         return null;
     }
 
+
+    public int getIntelligence()
+    {
+        return this.intelligence;
+    }
+
+    public int getStrength()
+    {
+        return this.strength;
+    }
+
+    private ArrayList<Animal> getNeighbours(Board board)
+    {
+        var currentNeighbours = new ArrayList<Animal>();
+
+        var possibleDirections = Vector.getAllDirections();
+        possibleDirections.forEach(dir ->
+        {
+            if(board.map[this.pos.x + dir.x][this.pos.y + dir.y] instanceof Animal)
+            {
+                currentNeighbours.add((Animal)board.map[this.pos.x + dir.x][this.pos.y + dir.y]);
+            }
+        });
+
+        return currentNeighbours;
+    }
 }

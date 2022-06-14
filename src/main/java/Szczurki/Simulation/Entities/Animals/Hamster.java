@@ -19,4 +19,10 @@ public class Hamster extends Animal {
         return null;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Chomik";
+    }
+
 }
