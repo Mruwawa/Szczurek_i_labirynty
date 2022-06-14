@@ -41,13 +41,13 @@ public class Vector {
         return new Vector(-this.x, -this.y);
     }
 
-    public Vector turnLeft() {
+    public Vector turnRight() {
         int y=this.x;
         int x=-this.y;
         return new Vector(x,y);
     }
 
-    public Vector turnRight() {
+    public Vector turnLeft() {
         int x=this.y;
         int y=-this.x;
         return new Vector(x,y);
