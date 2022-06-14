@@ -7,6 +7,7 @@ import Szczurki.Simulation.Entities.Interfaces.IUpdatable;
 import Szczurki.Utilities.Vector;
 import Szczurki.Simulation.Entities.Wall;
 
+import java.util.Objects;
 import java.util.Random;
 
 public abstract class Animal implements IEntity, IUpdatable {
