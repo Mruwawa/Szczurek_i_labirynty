@@ -1,5 +1,6 @@
-package Szczurki.Configuration;
+package Szczurki.Simulation.Setup;
 
+import Szczurki.Configuration.SimulationSettings;
 import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Simulation.Entities.Wall;
 

@@ -1,20 +1,22 @@
 package Szczurki;
-
-import Szczurki.Configuration.Configuration;
+import Szczurki.Configuration.ConfigurationData;
+import Szczurki.Configuration.ConfigurationProvider;
 import Szczurki.SimulationRunner.SimulationRunner;
 
-public class
-Program {
-    public static void main(String[] args)
-    {
+import java.nio.file.Path;
+import java.util.Objects;
 
-        //wczytywanie konfiguracji z pliku
-        var configuration = new Configuration("settings.json");
+public class Program {
+    public static void main(String[] args) {
+
+        //wczytywanie konfiguracji
+        var configuration = ConfigurationProvider.getConfiguration("settings.json");
 
         //inicjalizacja symulacji
         var simulationRunner = new SimulationRunner(configuration);
 
         simulationRunner.runSimulations();
+
 
     }
 }

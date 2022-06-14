@@ -1,7 +1,6 @@
 package Szczurki.Simulation.Visualization;
 
 import Szczurki.Simulation.Entities.Animals.*;
-import Szczurki.Simulation.Entities.Guardian;
 import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Simulation.Entities.Wall;
 
@@ -22,13 +21,6 @@ public class ConsoleRenderer implements IRenderer {
 
             for (int x = 0; x < entities.length; x++) {
                 var entity= entities[x][y];
-                if (entity instanceof Guardian) {
-                    System.out.print(ConsoleColors.RED_BACKGROUND);
-                    System.out.print("GRL");//GRL - góral
-                    System.out.print(ConsoleColors.RESET);
-
-                    continue;
-                }
                 if (entity instanceof Rat) {
                     System.out.print(ConsoleColors.YELLOW_BACKGROUND);
                     System.out.print(" S ");

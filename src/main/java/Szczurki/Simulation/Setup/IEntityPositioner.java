@@ -1,4 +1,4 @@
-package Szczurki.Simulation;
+package Szczurki.Simulation.Setup;
 
 import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Simulation.Entities.Interfaces.IUpdatable;
