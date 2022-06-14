@@ -35,14 +35,25 @@ public class EntityPositioner implements IEntityPositioner {
                     place = Vector.getRandomVector(map[0].length, map.length);
                 } while (map[place.x][place.y] != null);
 
-                Animal animal = switch (animalName) {
-                    case "gerbils" -> new Gerbil(place.x, place.y, pickName());
-                    case "hamsters" -> new Hamster(place.x, place.y, pickName());
-                    case "mice" -> new Mouse(place.x, place.y, pickName());
-                    case "mousedeer" -> new Mousedeer(place.x, place.y, pickName());
-                    case "rats" -> new Rat(place.x, place.y, pickName());
-                    default -> null;
-                };
+                Animal animal = null;
+
+                switch (animalName) {
+                    case "gerbils":
+                        animal = new Gerbil(place.x, place.y, pickName());
+                        break;
+                    case "hamsters":
+                        animal = new Hamster(place.x, place.y, pickName());
+                        break;
+                    case "mice":
+                        animal = new Mouse(place.x, place.y, pickName());
+                        break;
+                    case "mousedeer":
+                        animal = new Mousedeer(place.x, place.y, pickName());
+                        break;
+                    case "rats":
+                        animal = new Rat(place.x, place.y, pickName());
+                        break;
+                }
 
                 map[place.x][place.y] = animal;
                 updatableEntities.add(animal);
