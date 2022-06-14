@@ -1,6 +1,7 @@
 package Szczurki.Simulation.Entities.Animals;
 
 import Szczurki.Simulation.Board;
+import Szczurki.Simulation.Entities.Guardian;
 import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Simulation.Entities.Interfaces.IUpdatable;
 import Szczurki.Utilities.Vector;
@@ -94,7 +95,7 @@ public abstract class Animal implements IEntity, IUpdatable {
         var chosenTile = entities[pos.x + moveBy.x][pos.y + moveBy.y];
 
         //jeżeli natrafimy na inne zwierze lub na ścianę to nie możemy tam pójść
-        if (chosenTile instanceof Wall || chosenTile instanceof Animal) {
+        if (chosenTile instanceof Wall || chosenTile instanceof Animal || chosenTile instanceof Guardian) {
             return false;
         }
 

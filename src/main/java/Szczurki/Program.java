@@ -1,10 +1,7 @@
 package Szczurki;
-import Szczurki.Configuration.ConfigurationData;
+
 import Szczurki.Configuration.ConfigurationProvider;
 import Szczurki.SimulationRunner.SimulationRunner;
-
-import java.nio.file.Path;
-import java.util.Objects;
 
 public class Program {
     public static void main(String[] args) {
