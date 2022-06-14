@@ -1,5 +1,6 @@
 package Szczurki.Simulation;
 
+import Szczurki.Simulation.Entities.Animals.Rat;
 import Szczurki.Simulation.Setup.EntityPositioner;
 import Szczurki.Simulation.Setup.IEntityPositioner;
 import Szczurki.Simulation.Setup.IMapReader;
@@ -35,7 +36,6 @@ public class Board {
 
         map = _mapReader.getMap(_settings);
         _entityPositioner.placeEntities(map, updatableEntities);
-
     }
 
     public boolean isOutside(Vector vector) {
@@ -45,14 +45,12 @@ public class Board {
                 vector.y >= map[0].length;
     }
 
-    public void move(Vector start, Vector moveBy)
-    {
+    public void move(Vector start, Vector moveBy) {
         teleport(start, Vector.add(start, moveBy));
     }
 
-    public void teleport(Vector start, Vector end)
-    {
-        if(start.equals(end)) return;
+    public void teleport(Vector start, Vector end) {
+        if (start.equals(end)) return;
 
         map[end.x][end.y] = map[start.x][start.y];
         map[start.x][start.y] = null;
@@ -60,15 +58,12 @@ public class Board {
     }
 
 
-
-    public void remove(IUpdatable entity, Vector position)
-    {
+    public void remove(IUpdatable entity, Vector position) {
         removedEntities.add(entity);
         map[position.x][position.y] = null;
     }
 
-    public void removeInactiveEntities()
-    {
+    public void removeInactiveEntities() {
         updatableEntities.removeIf(removedEntities::contains);
     }
 }

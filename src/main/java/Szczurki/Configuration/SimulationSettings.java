@@ -8,6 +8,7 @@ public class SimulationSettings {
     public int mapHeight;
     public int mapWidth;
     public int turnCount;
+    public int guardianCount;
     public Map<String, Integer> animalCounts;
     public ArrayList<String> animalNames;
 }

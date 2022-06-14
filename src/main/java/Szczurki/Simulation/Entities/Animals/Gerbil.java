@@ -12,4 +12,21 @@ public class Gerbil extends Animal {
         return lastMove.turnLeft();
     }
 
+    @Override
+    public int getStrength() {
+        int strengthToReturn = this.strength;
+
+        for (var neighbour : neighbours) {
+            if (neighbour instanceof Gerbil) {
+                strengthToReturn += (neighbour.strength * cooperation) / 10;
+            }
+        }
+        return strengthToReturn;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Myszoskoczek";
+    }
 }

@@ -96,7 +96,7 @@ public class Guardian implements IEntity, IUpdatable {
         var chosenTile = entities[pos.x + moveBy.x][pos.y + moveBy.y];
 
         //strażnik nie może przemieścić się w miejsce gdzie jest ściana
-        return !(chosenTile instanceof Wall);
+        return !(chosenTile instanceof Wall || chosenTile instanceof Obstacle);
     }
 
     protected boolean isAnimalThere(Vector moveBy, IEntity[][] entities){

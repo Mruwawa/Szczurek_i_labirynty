@@ -3,6 +3,7 @@ package Szczurki.Simulation.Visualization;
 import Szczurki.Simulation.Entities.Animals.*;
 import Szczurki.Simulation.Entities.Guardian;
 import Szczurki.Simulation.Entities.Interfaces.IEntity;
+import Szczurki.Simulation.Entities.Obstacle;
 import Szczurki.Simulation.Entities.Wall;
 
 import java.util.concurrent.TimeUnit;
@@ -27,6 +28,14 @@ public class ConsoleRenderer implements IRenderer {
                     System.out.print("GRL");//GRL - góral
                     System.out.print(ConsoleColors.RESET);
 
+                    continue;
+                }
+
+                if (entity instanceof Obstacle) {
+                    System.out.print(ConsoleColors.BLACK_BACKGROUND);
+                    System.out.print(ConsoleColors.RED);
+                    System.out.print("TRP");//TRP - it's a trap!
+                    System.out.print(ConsoleColors.RESET);
                     continue;
                 }
                 if (entity instanceof Rat) {
@@ -89,7 +98,7 @@ public class ConsoleRenderer implements IRenderer {
         horizontalLine(entities.length + 2, "   ", ConsoleColors.WHITE_BACKGROUND);
 
         try {
-            TimeUnit.MILLISECONDS.sleep(100);
+            TimeUnit.MILLISECONDS.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
