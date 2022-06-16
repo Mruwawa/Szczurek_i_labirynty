@@ -63,7 +63,7 @@ public class EntityPositioner implements IEntityPositioner {
         for (int i = 0; i < _settings.guardianCount; i++) {
             Vector guardianPlace;
             do {
-                guardianPlace = Vector.getRandomVector(_settings.mapWidth, _settings.mapHeight);
+                guardianPlace = Vector.getRandomVector(map.length, map[0].length);
             } while (map[guardianPlace.x][guardianPlace.y] != null);
 
             Guardian guardian = new Guardian(guardianPlace.x, guardianPlace.y);
