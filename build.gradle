@@ -25,6 +25,10 @@ application {
 }
 
 jar {
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
     manifest {
         attributes(
                 'Main-Class': 'Szczurki.Program'
@@ -32,15 +36,3 @@ jar {
     }
 }
 
-task fatJar(type: Jar) {
-    manifest.from jar.manifest
-    classifier = 'all'
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    } {
-        exclude "META-INF/.SF"
-        exclude "META-INF/.DSA"
-        exclude "META-INF/*.RSA"
-    }
-    with jar
-}

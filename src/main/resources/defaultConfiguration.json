@@ -14,9 +14,7 @@
   ],
   "simulationSettingsList": [
     {
-      "fileName": "labirynt 20x20.txt",
-      "mapHeight": 20,
-      "mapWidth": 20,
+      "fileName": "labirynt domyslny.txt",
       "turnCount": 1000,
       "guardianCount": 1,
       "animalCounts": {
