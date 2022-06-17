@@ -1,10 +1,9 @@
 package Szczurki.Simulation;
 
 import Szczurki.Configuration.SimulationSettings;
-import Szczurki.Simulation.Visualization.ConsoleRenderer;
+import Szczurki.Simulation.Visualization.Console.ConsoleRenderer;
 import Szczurki.Simulation.Visualization.IRenderer;
-
-import java.util.List;
+import Szczurki.Simulation.Visualization.Window.WindowRenderer;
 
 public class Simulation {
 
@@ -16,9 +15,10 @@ public class Simulation {
     public Simulation(SimulationSettings settings){
         _settings = settings;
         board = new Board(settings);
-        _renderer = new ConsoleRenderer();
-
         board.initializeEntities();
+
+        _renderer = new WindowRenderer(board.map);
+//        _renderer = new ConsoleRenderer();
     }
 
     public void run() {
@@ -26,11 +26,12 @@ public class Simulation {
 
         for (int i = 0; i < _settings.turnCount; i++) {
             turn();
-            if(board.updatableEntities.size() == 0) {
-                System.out.println("Symulacja zakończona");
+            if(board.updatableEntities.size() == 1) {
                 break;
             }
         }
+        System.out.println("Symulacja zakończona");
+        _renderer.stop();
     }
 
     private void turn() {
