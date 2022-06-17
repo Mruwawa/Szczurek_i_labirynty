@@ -19,7 +19,7 @@ public class MapReader implements IMapReader {
 
         try {
 
-            var inputStream = ResourceProvider.getResource(fileName);
+            var inputStream = ResourceProvider.getResource("labyrinths/" + fileName);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
             String line;
@@ -30,9 +30,9 @@ public class MapReader implements IMapReader {
 
 
         } catch (IOException e) {
-            if (!fileName.equals("labirynt domyslny.txt")) {
+            if (!fileName.equals("labyrinths/labirynt domyslny.txt")) {
                 System.out.println("Wczytywanie mapy nie powiodlo sie. Wczytuje domyslna mape");
-                return getMap("labirynt domyslny.txt");
+                return getMap("labyrinths/labirynt domyslny.txt");
             }
             System.out.println("Wczytywanie domyslnej mapy tez sie nie powiodlo!");
             return null;

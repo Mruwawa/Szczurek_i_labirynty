@@ -1,4 +1,4 @@
-package Szczurki.Simulation.Visualization;
+package Szczurki.Simulation.Visualization.Console;
 
 class ConsoleColors {
     public static final String RESET = "\u001B[0m";
