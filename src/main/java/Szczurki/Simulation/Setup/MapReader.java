@@ -32,22 +32,20 @@ public class MapReader implements IMapReader {
         }
 
 
-        IEntity[][] map = new IEntity[labirynth.size()][labirynth.get(0).length()];
+        IEntity[][] map = new IEntity[labirynth.get(0).length()][labirynth.size()];
 
-        for (int i = 0; i < labirynth.size(); ++i) {
-            for (int j = 0; j < labirynth.get(0).length(); ++j) {
-                if (labirynth.get(i).charAt(j) == '#') {
-                    map[j][i] = new Wall();
+        for (int i = 0; i < labirynth.get(0).length(); ++i) {
+            for (int j = 0; j < labirynth.size(); ++j) {
+                if (labirynth.get(j).charAt(i) == '#') {
+                    map[i][j] = new Wall();
                 }
 
-                if (labirynth.get(i).charAt(j) == '@') {
-                    map[j][i] = new Obstacle(10, 10);
+                if (labirynth.get(j).charAt(i) == '@') {
+                    map[i][j] = new Obstacle(10, 10);
                 }
 
             }
         }
-        int mapHeight=labirynth.size();
-        int mapWidth = labirynth.get(0).length();
 
         return map;
     }
