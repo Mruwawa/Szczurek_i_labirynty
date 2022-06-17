@@ -34,7 +34,7 @@ public class Board {
 
     public void initializeEntities() {
 
-        map = _mapReader.getMap(_settings);
+        map = _mapReader.getMap(_settings.fileName);
         _entityPositioner.placeEntities(map, updatableEntities);
     }
 
