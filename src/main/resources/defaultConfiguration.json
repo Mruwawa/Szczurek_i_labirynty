@@ -1,5 +1,7 @@
 {
   "repeatCount": 1,
+  "rendererType": "WINDOW",
+  "frameTime": 500,
   "animalNames": [
     "Kłapcio",
     "Dee dee",
@@ -14,7 +16,7 @@
   ],
   "simulationSettingsList": [
     {
-      "fileName": "labirynt domyslny.txt",
+      "labyrinthFileName": "labirynt domyslny.txt",
       "turnCount": 1000,
       "guardianCount": 1,
       "animalCounts": {

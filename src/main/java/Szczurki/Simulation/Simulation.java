@@ -1,46 +1,41 @@
 package Szczurki.Simulation;
 
 import Szczurki.Configuration.SimulationSettings;
-import Szczurki.Simulation.Visualization.Console.ConsoleRenderer;
+import Szczurki.Simulation.Entities.Animals.Animal;
 import Szczurki.Simulation.Visualization.IRenderer;
-import Szczurki.Simulation.Visualization.Window.WindowRenderer;
 
 public class Simulation {
 
-    private final Board board;
-
     private final SimulationSettings _settings;
+    private final Board _board;
     private final IRenderer _renderer;
 
-    public Simulation(SimulationSettings settings){
+    public Simulation(SimulationSettings settings, Board board, IRenderer renderer) {
         _settings = settings;
-        board = new Board(settings);
-        board.initializeEntities();
-
-        _renderer = new WindowRenderer(board.map);
-//        _renderer = new ConsoleRenderer();
+        _board = board;
+        _renderer = renderer;
     }
 
     public void run() {
-        _renderer.render(board.map);
+        _renderer.render(_board.getMap());
 
-        for (int i = 0; i < _settings.turnCount; i++) {
-            turn();
-            if(board.updatableEntities.size() == 1) {
+        for (int i = 0; i < _settings.getTurnCount(); i++) {
+            turn(i);
+            if(!_board.areThereAnyActiveAnimalsLeft())
                 break;
-            }
         }
         System.out.println("Symulacja zakończona");
         _renderer.stop();
     }
 
-    private void turn() {
-        for (var entity :
-                board.updatableEntities) {
-            entity.update(board);
+    private void turn(int iteration) {
 
+        for (var entity : _board.getUpdatableEntities()) {
+
+            if (entity instanceof Animal && !((Animal) entity).isActive()) continue;
+
+            entity.update(_board, iteration);
         }
-        board.removeInactiveEntities();
-        _renderer.render(board.map);
+        _renderer.render(_board.getMap());
     }
 }

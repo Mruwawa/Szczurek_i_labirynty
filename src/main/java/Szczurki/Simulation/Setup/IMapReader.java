@@ -1,6 +1,5 @@
 package Szczurki.Simulation.Setup;
 
-import Szczurki.Configuration.SimulationSettings;
 import Szczurki.Simulation.Entities.Interfaces.IEntity;
 
 public interface IMapReader {

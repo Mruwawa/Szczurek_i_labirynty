@@ -15,6 +15,7 @@ import java.util.Map;
 
 public class ImageLoader {
 
+    private final String textureDirectory = "textures/";
     private final int _imgSize;
 
     public ImageLoader(int imgSize) {
@@ -36,7 +37,7 @@ public class ImageLoader {
 
         classes.forEach(type -> {
             try {
-                var inputStream = ResourceProvider.getResource("textures/" + type.getSimpleName() + ".png");
+                var inputStream = ResourceProvider.getResource(textureDirectory + type.getSimpleName() + ".png");
                 var originalImg = ImageIO.read(inputStream);
                 var img = resizeImage(originalImg, _imgSize, _imgSize);
                 output.put(type, img);
@@ -48,10 +49,15 @@ public class ImageLoader {
         return output;
     }
 
-    BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
-        Image resultingImage = originalImage.getScaledInstance(targetWidth, targetHeight, Image.SCALE_DEFAULT);
-        BufferedImage outputImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
-        outputImage.getGraphics().drawImage(resultingImage, 0, 0, null);
+    private BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
+        var resultingImage =
+                originalImage
+                        .getScaledInstance(targetWidth, targetHeight, Image.SCALE_DEFAULT);
+        var outputImage =
+                new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
+        outputImage
+                .getGraphics()
+                .drawImage(resultingImage, 0, 0, null);
         return outputImage;
     }
 }

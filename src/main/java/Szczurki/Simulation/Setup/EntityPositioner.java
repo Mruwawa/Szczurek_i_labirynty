@@ -12,28 +12,36 @@ import java.util.List;
 import java.util.Random;
 
 public class EntityPositioner implements IEntityPositioner {
-    private final SimulationSettings _settings;
-    private ArrayList<String> _possibleNames;
 
-    public EntityPositioner(SimulationSettings settings) {
+    private final ArrayList<String> _animalNames;
+    private final SimulationSettings _settings;
+
+    private ArrayList<String> _currentPossibleNames;
+
+    public EntityPositioner(SimulationSettings settings, ArrayList<String> animalNames) {
         _settings = settings;
-        _possibleNames = new ArrayList<>();
+        _animalNames = animalNames;
+        _currentPossibleNames = new ArrayList<>();
     }
 
     @Override
-    public void placeEntities(IEntity[][] map, List<IUpdatable> updatableEntities) {
-//umieszczenie strażnika na mapie
+    public List<IUpdatable> getPlacedEntities(IEntity[][] map) {
+        var updatableEntities = new ArrayList<IUpdatable>();
+        var freeSpaces = getFreeSpaces(map);
+        var rand = new Random();
 
-
-        _settings.animalCounts.forEach((animalName, count) ->
+        _settings.getAnimalCounts().forEach((animalName, count) ->
         {
             //rozmieszczenie zwierząt na mapie
             for (int i = 0; i < count; i++) {
 
-                Vector place;
-                do {
-                    place = Vector.getRandomVector(map.length, map[0].length);
-                } while (map[place.x][place.y] != null);
+                if (freeSpaces.size() == 0) {
+                    System.out.println("Zabrakło miejsc na mapie dla wszystkich zwierząt!");
+                    return;
+                }
+                var index = rand.nextInt(freeSpaces.size());
+                var place = freeSpaces.get(index);
+                freeSpaces.remove(place);
 
                 Animal animal = null;
 
@@ -59,29 +67,44 @@ public class EntityPositioner implements IEntityPositioner {
                 updatableEntities.add(animal);
             }
         });
+        //umieszczenie strażnika na mapie
 
-        for (int i = 0; i < _settings.guardianCount; i++) {
-            Vector guardianPlace;
-            do {
-                guardianPlace = Vector.getRandomVector(map.length, map[0].length);
-            } while (map[guardianPlace.x][guardianPlace.y] != null);
+        for (int i = 0; i < _settings.getGuardianCount(); i++) {
+
+            if (freeSpaces.size() == 0) {
+                System.out.println("Zabrakło miejsc na mapie dla wszystkich zwierząt!");
+                return updatableEntities;
+            }
+            var index = rand.nextInt(freeSpaces.size());
+            var guardianPlace = freeSpaces.get(index);
+            freeSpaces.remove(guardianPlace);
 
             Guardian guardian = new Guardian(guardianPlace.x, guardianPlace.y);
 
             map[guardianPlace.x][guardianPlace.y] = guardian;
             updatableEntities.add(guardian);
         }
-
+        return updatableEntities;
     }
 
     private String pickName() {
-        if (_possibleNames.size() == 0) _possibleNames = new ArrayList<>(_settings.animalNames);
+        if (_currentPossibleNames.size() == 0) _currentPossibleNames = new ArrayList<>(_animalNames);
 
         var random = new Random();
-        var index = random.nextInt(_possibleNames.size());
-        var pickedName = _possibleNames.get(index);
-        _possibleNames.remove(pickedName);
+        var index = random.nextInt(_currentPossibleNames.size());
+        var pickedName = _currentPossibleNames.get(index);
+        _currentPossibleNames.remove(pickedName);
 
         return pickedName;
+    }
+
+    private List<Vector> getFreeSpaces(IEntity[][] map) {
+        var freeSpaces = new ArrayList<Vector>();
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                if (map[i][j] == null) freeSpaces.add(new Vector(i, j));
+            }
+        }
+        return freeSpaces;
     }
 }

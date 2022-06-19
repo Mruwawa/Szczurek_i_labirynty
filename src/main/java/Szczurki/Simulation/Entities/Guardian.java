@@ -1,6 +1,7 @@
 package Szczurki.Simulation.Entities;
 
 import Szczurki.Simulation.Board;
+import Szczurki.Simulation.CauseOfFinish;
 import Szczurki.Simulation.Entities.Animals.Animal;
 import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Simulation.Entities.Interfaces.IUpdatable;
@@ -24,15 +25,15 @@ public class Guardian implements IEntity, IUpdatable {
     }
 
     @Override
-    public void update(Board board) {
+    public void update(Board board, int iteration) {
 
-        var nextMove = chooseNextMove(board);
+        var nextMove = chooseNextMove(board, iteration);
 
         board.move(pos, nextMove);
         lastMove.set(nextMove);
     }
 
-    protected Vector chooseNextMove(Board board) {
+    protected Vector chooseNextMove(Board board, int iteration) {
 
         //deklarujemy zbiór możliwych ruchów oraz preferowanych ruchów (czyli takich, które zakończą się złapaniem zwierzęcia)
 
@@ -59,16 +60,16 @@ public class Guardian implements IEntity, IUpdatable {
             //usuwamy wybrany ruch z możliwych ruchów, żeby ich nie powtarzać
             preferredMoves.remove(candidateMoveIndex);
 
-            if (isAnimalThere(candidateMove, board.map)){
+            if (isAnimalThere(candidateMove, board.getMap())){
 
-                    IUpdatable animal = (IUpdatable)board.map[pos.x + candidateMove.x][pos.y + candidateMove.y];
+                    var animal = (Animal)board.getEntityAt(Vector.add(pos, candidateMove));
 
                     board.remove(animal,Vector.add(pos,candidateMove));
-
+                    animal.setCauseOfFinish(CauseOfFinish.GUARDIAN);
+                    animal.setTimeOfFinish(iteration);
 
                 return candidateMove;
             }
-
 
         } while (preferredMoves.size() != 0);
 
@@ -82,7 +83,7 @@ public class Guardian implements IEntity, IUpdatable {
             //usuwamy wybrany ruch z możliwych ruchów, żeby ich nie powtarzać
             possibleMoves.remove(candidateMoveIndex);
 
-            if (canMove(candidateMove, board.map)) {
+            if (canMove(candidateMove, board.getMap())) {
                 return candidateMove;
             }
 

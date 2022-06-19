@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class ConfigurationProvider {
+    private static final String defaultConfigFileName = "defaultConfiguration.json";
 
     public static ConfigurationData getConfiguration(String fileName) {
         try {
@@ -14,9 +15,9 @@ public class ConfigurationProvider {
             return new Gson().fromJson(data, ConfigurationData.class);
 
         } catch (Exception e) {
-            if (!fileName.equals("defaultConfiguration.json")) {
+            if (!fileName.equals(defaultConfigFileName)) {
                 System.out.println("Wczytywanie konfiguracji nie powiodlo sie :(. Uzywam domyslnej konfiguracji.");
-                return getConfiguration("defaultConfiguration.json");
+                return getConfiguration(defaultConfigFileName);
             }
             System.out.println("Wczytywanie domyslnej konfiguracji tez sie nie powiodlo :o");
             return null;
@@ -26,11 +27,12 @@ public class ConfigurationProvider {
     private static String readAllLines(String fileName) throws IOException {
         var input = ResourceProvider.getResource(fileName);
         var reader = new BufferedReader(new InputStreamReader(input));
+        var builder = new StringBuilder();
 
-        StringBuilder data = new StringBuilder();
         for (String line = reader.readLine(); line != null; line = reader.readLine()) {
-            data.append(line);
+            builder.append(line);
         }
-        return data.toString();
+
+        return builder.toString();
     }
 }

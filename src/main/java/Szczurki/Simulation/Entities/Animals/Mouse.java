@@ -10,7 +10,7 @@ public class Mouse extends Animal{
     public Mouse(int x, int y, String name) {
         super(x, y, name,7,3,4,5);
     }
-    public Vector choosePreferredMove(IEntity[][] entities){
+    public Vector choosePreferredMove(){
         Random chance = new Random();
         int chanceForTurningBack = chance.nextInt(101);
         if(chanceForTurningBack<26){
