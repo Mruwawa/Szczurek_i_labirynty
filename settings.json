@@ -1,5 +1,7 @@
 {
-  "repeatCount": 1,
+  "repeatCount": 10000,
+  "rendererType": "WINDOW",
+  "frameTime": 200,
   "animalNames": [
     "Kłapcio",
     "Dee dee",
@@ -14,7 +16,7 @@
   ],
   "simulationSettingsList": [
     {
-      "fileName": "labirynt 20x20.txt",
+      "labyrinthFileName": "labirynt 20x20.txt",
       "turnCount": 1000,
       "guardianCount": 1,
       "animalCounts": {

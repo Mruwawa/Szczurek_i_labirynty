@@ -1,48 +1,27 @@
 package Szczurki.Simulation;
 
-import Szczurki.Simulation.Entities.Animals.Rat;
-import Szczurki.Simulation.Setup.EntityPositioner;
-import Szczurki.Simulation.Setup.IEntityPositioner;
-import Szczurki.Simulation.Setup.IMapReader;
-import Szczurki.Simulation.Setup.MapReader;
-import Szczurki.Configuration.SimulationSettings;
+import Szczurki.Simulation.Entities.Animals.Animal;
 import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Simulation.Entities.Interfaces.IUpdatable;
 import Szczurki.Utilities.Vector;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
 
-    public IEntity[][] map;
-    public final ArrayList<IUpdatable> updatableEntities;
-    private final ArrayList<IUpdatable> removedEntities;
+    private final IEntity[][] _map;
+    private final List<IUpdatable> _updatableEntities;
 
-    private final IMapReader _mapReader;
-    private final SimulationSettings _settings;
-
-    private final IEntityPositioner _entityPositioner;
-
-    public Board(SimulationSettings settings) {
-        updatableEntities = new ArrayList<>();
-        removedEntities = new ArrayList<>();
-        _mapReader = new MapReader();
-        _settings = settings;
-        _entityPositioner = new EntityPositioner(settings);
-    }
-
-
-    public void initializeEntities() {
-
-        map = _mapReader.getMap(_settings.fileName);
-        _entityPositioner.placeEntities(map, updatableEntities);
+    public Board(List<IUpdatable> updatableEntities, IEntity[][] map) {
+        _updatableEntities = updatableEntities;
+        _map = map;
     }
 
     public boolean isOutside(Vector vector) {
         return vector.x < 0 ||
-                vector.x >= map.length ||
+                vector.x >= _map.length ||
                 vector.y < 0 ||
-                vector.y >= map[0].length;
+                vector.y >= _map[0].length;
     }
 
     public void move(Vector start, Vector moveBy) {
@@ -52,18 +31,32 @@ public class Board {
     public void teleport(Vector start, Vector end) {
         if (start.equals(end)) return;
 
-        map[end.x][end.y] = map[start.x][start.y];
-        map[start.x][start.y] = null;
+        _map[end.x][end.y] = _map[start.x][start.y];
+        _map[start.x][start.y] = null;
         start.set(end);
     }
 
 
     public void remove(IUpdatable entity, Vector position) {
-        removedEntities.add(entity);
-        map[position.x][position.y] = null;
+        if(entity instanceof Animal) ((Animal) entity).setActive(false);
+        _map[position.x][position.y] = null;
     }
 
-    public void removeInactiveEntities() {
-        updatableEntities.removeIf(removedEntities::contains);
+    public IEntity getEntityAt(Vector vector)
+    {
+        return _map[vector.x][vector.y];
+    }
+
+    public IEntity[][] getMap()
+    {
+        return _map;
+    }
+    public List<IUpdatable> getUpdatableEntities()
+    {
+        return _updatableEntities;
+    }
+
+    public boolean areThereAnyActiveAnimalsLeft(){
+        return _updatableEntities.stream().anyMatch(x -> x instanceof Animal && ((Animal)x).isActive());
     }
 }

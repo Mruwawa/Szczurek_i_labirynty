@@ -13,13 +13,15 @@ import java.util.ArrayList;
 public class MapReader implements IMapReader {
 
     ArrayList<String> labirynth = new ArrayList<>();
+    private final String mapDirectory = "labyrinths/";
+    private final String defaultMapFileName = "labirynt domyslny.txt";
 
     public IEntity[][] getMap(String fileName) {
 
 
         try {
 
-            var inputStream = ResourceProvider.getResource("labyrinths/" + fileName);
+            var inputStream = ResourceProvider.getResource(mapDirectory + fileName);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
             String line;
@@ -30,9 +32,9 @@ public class MapReader implements IMapReader {
 
 
         } catch (IOException e) {
-            if (!fileName.equals("labyrinths/labirynt domyslny.txt")) {
+            if (!fileName.equals(mapDirectory + defaultMapFileName)) {
                 System.out.println("Wczytywanie mapy nie powiodlo sie. Wczytuje domyslna mape");
-                return getMap("labyrinths/labirynt domyslny.txt");
+                return getMap(mapDirectory + defaultMapFileName);
             }
             System.out.println("Wczytywanie domyslnej mapy tez sie nie powiodlo!");
             return null;

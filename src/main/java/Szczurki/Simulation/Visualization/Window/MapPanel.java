@@ -8,15 +8,14 @@ import Szczurki.Simulation.Entities.Wall;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 
 import static java.util.Map.entry;
 
-public class GridPanel extends JPanel {
+public class MapPanel extends JPanel {
 
-    private IEntity[][] grid;
+    private IEntity[][] _grid;
     private final int squareSize;
     private final Map<Class<?>, Color> colorMappings = Map.ofEntries(
             entry(Guardian.class, Color.red),
@@ -31,20 +30,20 @@ public class GridPanel extends JPanel {
     private final Map<Class<?>, Image> imageMappings;
 
 
-    public GridPanel(IEntity[][] entities) {
-        grid = entities;
+    public MapPanel(IEntity[][] entities) {
+        _grid = entities;
         squareSize = 1000 / entities[0].length;
         imageMappings = new ImageLoader(squareSize).getImageMappings();
     }
 
     public void updateGrid(IEntity[][] newGrid) {
-        grid = newGrid;
+        _grid = newGrid;
         this.repaint();
     }
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(grid.length * squareSize, grid[0].length * squareSize);
+        return new Dimension(_grid.length * squareSize, _grid[0].length * squareSize);
     }
 
 
@@ -53,14 +52,14 @@ public class GridPanel extends JPanel {
         super.paintComponent(g);
         Color gColor = g.getColor();
 
-        for (int y = 0; y < grid[0].length; y++) {
-            for (int x = 0; x < grid.length; x++) {
-                if (grid[x][y] != null && imageMappings.containsKey(grid[x][y].getClass())) {
-                    g.drawImage(imageMappings.get(grid[x][y].getClass()), x * squareSize, y * squareSize, null);
+        for (int y = 0; y < _grid[0].length; y++) {
+            for (int x = 0; x < _grid.length; x++) {
+                if (!Objects.isNull(_grid[x][y]) && imageMappings.containsKey(_grid[x][y].getClass())) {
+                    g.drawImage(imageMappings.get(_grid[x][y].getClass()), x * squareSize, y * squareSize, null);
                     continue;
                 }
-                if (grid[x][y] != null && colorMappings.containsKey(grid[x][y].getClass())) {
-                    g.setColor(colorMappings.get(grid[x][y].getClass()));
+                if (_grid[x][y] != null && colorMappings.containsKey(_grid[x][y].getClass())) {
+                    g.setColor(colorMappings.get(_grid[x][y].getClass()));
                     g.fillRect(x * squareSize, y * squareSize, squareSize, squareSize);
                     continue;
                 }

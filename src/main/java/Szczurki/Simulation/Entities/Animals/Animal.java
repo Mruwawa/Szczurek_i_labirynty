@@ -1,6 +1,7 @@
 package Szczurki.Simulation.Entities.Animals;
 
 import Szczurki.Simulation.Board;
+import Szczurki.Simulation.CauseOfFinish;
 import Szczurki.Simulation.Entities.Guardian;
 import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Simulation.Entities.Interfaces.IUpdatable;
@@ -9,7 +10,6 @@ import Szczurki.Utilities.Vector;
 import Szczurki.Simulation.Entities.Wall;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
 
 public abstract class Animal implements IEntity, IUpdatable {
@@ -21,6 +21,10 @@ public abstract class Animal implements IEntity, IUpdatable {
     protected final Vector lastMove;
     protected ArrayList<Animal> neighbours;
 
+    private boolean active;
+    private int timeOfFinish;
+    private CauseOfFinish causeOfFinish;
+
     Animal(int x, int y, String name, int speed, int intelligence, int strength, int cooperation) {
         pos = new Vector(x, y);
         lastMove = Vector.ZERO();
@@ -30,23 +34,26 @@ public abstract class Animal implements IEntity, IUpdatable {
         this.intelligence = intelligence;
         this.strength = strength;
         this.cooperation = cooperation;
+        active = true;
+
     }
 
     @Override
-    public void update(Board board) {
+    public void update(Board board, int iteration) {
 
         var nextMove = chooseNextMove(board);
 
         if (nextMove == null) {
-            System.out.println(this.toString() + " o imieniu " + this.name + " wyszedł z labiryntu!");
+            System.out.println(this + " o imieniu " + this.name + " wyszedł z labiryntu!");
             board.remove(this, pos);
+            timeOfFinish = iteration;
+            causeOfFinish = CauseOfFinish.ESCAPE;
             return;
         }
 
-        if(board.map[pos.x + nextMove.x][pos.y + nextMove.y] instanceof Obstacle)
-        {
-            var obstacle = (Obstacle)board.map[pos.x + nextMove.x][pos.y + nextMove.y];
-            if(obstacle.isActive()) {
+        if (board.getEntityAt(Vector.add(pos, nextMove)) instanceof Obstacle) {
+            var obstacle = (Obstacle) board.getEntityAt(Vector.add(pos, nextMove));
+            if (obstacle.isActive()) {
                 this.neighbours = getNeighbours(board);
 
                 obstacle.interact(this);
@@ -75,8 +82,8 @@ public abstract class Animal implements IEntity, IUpdatable {
 
         //wybieramy preferowany przez zwierzaka ruch (każda klasa ma inną implementację)
         //i jeżeli możemy go wykonać to to robimy
-        var preferredMove = choosePreferredMove(board.map);
-        if (preferredMove != null && canMove(preferredMove, board.map)) {
+        var preferredMove = choosePreferredMove();
+        if (preferredMove != null && canMove(preferredMove, board)) {
             return preferredMove;
         }
 
@@ -89,22 +96,22 @@ public abstract class Animal implements IEntity, IUpdatable {
             //usuwamy wybrany ruch z możliwych ruchów, żeby ich nie powtarzać
             possibleMoves.remove(candidateMoveIndex);
 
-            if (canMove(candidateMove, board.map)) {
+            if (canMove(candidateMove, board)) {
                 return candidateMove;
             }
 
         } while (possibleMoves.size() != 0);
 
         //Jeżeli nie możemy się ruszyć to próbujemy się cofnąć
-        if (canMove(lastMove.reversed(), board.map))
+        if (canMove(lastMove.reversed(), board))
             return lastMove.reversed();
 
         //jeżeli skończą nam się możliwe ruchy to stoimy w miejscu
         return new Vector(0, 0);
     }
 
-    protected boolean canMove(Vector moveBy, IEntity[][] entities) {
-        var chosenTile = entities[pos.x + moveBy.x][pos.y + moveBy.y];
+    protected boolean canMove(Vector moveBy, Board board) {
+        var chosenTile = board.getEntityAt(Vector.add(pos, moveBy));
 
         //jeżeli natrafimy na inne zwierze lub na ścianę to nie możemy tam pójść
         if (chosenTile instanceof Wall || chosenTile instanceof Animal || chosenTile instanceof Guardian) {
@@ -114,34 +121,53 @@ public abstract class Animal implements IEntity, IUpdatable {
         return true;
     }
 
-    protected Vector choosePreferredMove(IEntity[][] entities) {
+    protected Vector choosePreferredMove() {
         return null;
     }
 
-
-    public int getIntelligence()
-    {
-        return this.intelligence;
-    }
-
-    public int getStrength()
-    {
-        return this.strength;
-    }
-
-    private ArrayList<Animal> getNeighbours(Board board)
-    {
+    private ArrayList<Animal> getNeighbours(Board board) {
         var currentNeighbours = new ArrayList<Animal>();
 
         var possibleDirections = Vector.getAllDirections();
         possibleDirections.forEach(dir ->
         {
-            if(board.map[this.pos.x + dir.x][this.pos.y + dir.y] instanceof Animal)
-            {
-                currentNeighbours.add((Animal)board.map[this.pos.x + dir.x][this.pos.y + dir.y]);
+            if (board.getEntityAt(Vector.add(pos, dir)) instanceof Animal) {
+                currentNeighbours.add((Animal) board.getEntityAt(Vector.add(pos, dir)));
             }
         });
 
         return currentNeighbours;
+    }
+
+    public int getIntelligence() {
+        return this.intelligence;
+    }
+
+    public int getStrength() {
+        return this.strength;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean state) {
+        active = state;
+    }
+
+    public int getTimeOfFinish() {
+        return timeOfFinish;
+    }
+
+    public void setTimeOfFinish(int iteration) {
+        timeOfFinish = iteration;
+    }
+
+    public CauseOfFinish getCauseOfFinish() {
+        return causeOfFinish;
+    }
+
+    public void setCauseOfFinish(CauseOfFinish causeOfFinish) {
+        this.causeOfFinish = causeOfFinish;
     }
 }
