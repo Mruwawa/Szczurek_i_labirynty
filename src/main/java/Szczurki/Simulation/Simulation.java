@@ -2,7 +2,10 @@ package Szczurki.Simulation;
 
 import Szczurki.Configuration.SimulationSettings;
 import Szczurki.Simulation.Entities.Animals.Animal;
+import Szczurki.Simulation.Entities.Interfaces.IUpdatable;
 import Szczurki.Simulation.Visualization.IRenderer;
+
+import java.util.List;
 
 public class Simulation {
 
@@ -24,8 +27,12 @@ public class Simulation {
             if(!_board.areThereAnyActiveAnimalsLeft())
                 break;
         }
-        System.out.println("Symulacja zakończona");
         _renderer.stop();
+    }
+
+    public List<IUpdatable> getResults()
+    {
+        return _board.getUpdatableEntities();
     }
 
     private void turn(int iteration) {

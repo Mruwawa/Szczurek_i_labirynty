@@ -44,7 +44,6 @@ public abstract class Animal implements IEntity, IUpdatable {
         var nextMove = chooseNextMove(board);
 
         if (nextMove == null) {
-            System.out.println(this + " o imieniu " + this.name + " wyszedł z labiryntu!");
             board.remove(this, pos);
             timeOfFinish = iteration;
             causeOfFinish = CauseOfFinish.ESCAPE;

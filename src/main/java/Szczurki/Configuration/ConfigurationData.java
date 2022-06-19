@@ -8,6 +8,7 @@ public class ConfigurationData {
     private ArrayList<String> animalNames;
     private RendererType rendererType;
     private int frameTime;
+    private ResultsWriterType resultsWriterType;
 
 
     public int getRepeatCount() {
@@ -28,5 +29,9 @@ public class ConfigurationData {
 
     public int getFrameTime() {
         return frameTime;
+    }
+
+    public ResultsWriterType getResultsWriterType() {
+        return resultsWriterType;
     }
 }
