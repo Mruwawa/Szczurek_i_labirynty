@@ -1,6 +1,7 @@
 {
-  "repeatCount": 10000,
-  "rendererType": "WINDOW",
+  "repeatCount": 1000,
+  "rendererType": "",
+  "resultsWriterType": "CSV",
   "frameTime": 200,
   "animalNames": [
     "Kłapcio",
@@ -17,6 +18,18 @@
   "simulationSettingsList": [
     {
       "labyrinthFileName": "labirynt 20x20.txt",
+      "turnCount": 1000,
+      "guardianCount": 1,
+      "animalCounts": {
+        "hamsters": 2,
+        "gerbils": 2,
+        "mousedeer": 2,
+        "mice": 2,
+        "rats": 2
+      }
+    },
+    {
+      "labyrinthFileName": "labirynt 15x15.txt",
       "turnCount": 1000,
       "guardianCount": 1,
       "animalCounts": {

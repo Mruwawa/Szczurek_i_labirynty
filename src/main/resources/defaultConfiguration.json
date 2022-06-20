@@ -1,6 +1,7 @@
 {
   "repeatCount": 1,
   "rendererType": "WINDOW",
+  "resultsWriterType": "CSV",
   "frameTime": 500,
   "animalNames": [
     "Kłapcio",
