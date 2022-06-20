@@ -10,15 +10,25 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Klasa odpowiedzialna za zapisywanie wyników symulacji do pliku
+ */
 public class CsvResultsWriter implements IResultsWriter {
     private final String resultsFileName = "results.csv";
     private final char separator = ';';
 
+    /**
+     * W konstruktorze czyścimy zawartość pliku z wynikami
+     */
     public CsvResultsWriter() {
         clearFile();
     }
 
-    public void writeSettingsToFile(SimulationSettings settings) {
+    /**
+     * Metoda dopisuje do pliku nagłówek zawierający wypis ustawień symulacji
+     * @param settings ustawienia symulacji
+     */
+    public void writeSettings(SimulationSettings settings) {
         var builder = new StringBuilder();
         builder.append("Symulacja\n");
         builder.append("Labirynt:");
@@ -36,10 +46,19 @@ public class CsvResultsWriter implements IResultsWriter {
             }
         });
         builder.append("\n");
-        write(builder.toString());
+        append(builder.toString());
 
     }
 
+    /**
+     * Metoda przyjmuje listę agentów symulacji, następnie zbiera z niej dane
+     * na temat czasu uraz powodu wyjścia z labiryntu przez każde zwierze
+     * i dopisuje linijke z tymi danymi do pliku
+     * Jeżeli zwierze wyszło z labiryntu liczba jest dodatnia
+     * Jeżeli nie wyszło jest to 0
+     * Jeżeli zostało dopadnięte przez strażnika liczba jest ujemna
+     * @param updatableEntities Lista agentów symulacji
+     */
     public void addResults(List<IUpdatable> updatableEntities) {
         var builder = new StringBuilder();
         updatableEntities
@@ -53,10 +72,14 @@ public class CsvResultsWriter implements IResultsWriter {
                     builder.append(separator);
                 });
         builder.append("\n");
-        write(builder.toString());
+        append(builder.toString());
     }
 
-    private void write(String content) {
+    /**
+     * Metoda dopisująca zawartość do pliku z wynikami
+     * @param content zawartość, którą chcemy dopisać do pliku
+     */
+    private void append(String content) {
         try {
             var resultsFile = new FileWriter(resultsFileName, true);
             var writer = new BufferedWriter(resultsFile);
@@ -67,6 +90,9 @@ public class CsvResultsWriter implements IResultsWriter {
         }
     }
 
+    /**
+     * Metoda czyszcząca zawartość pliku z wynikami
+     */
     private void clearFile()
     {
         try {

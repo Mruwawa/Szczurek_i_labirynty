@@ -14,6 +14,9 @@ public class Obstacle implements IEntity {
     }
 
 
+    /**
+     * @param animal Zwierzę, które
+     */
     public void interact(Animal animal)
     {
         if(this.requiredStrength <= animal.getStrength() || this.requiredIntelligence <= animal.getIntelligence())

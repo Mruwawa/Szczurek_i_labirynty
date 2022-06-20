@@ -6,9 +6,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Klasa odpowiedzialna za czytanie danych konfiguracji z pliku
+ */
 public class ConfigurationProvider {
     private static final String defaultConfigFileName = "defaultConfiguration.json";
 
+    /**
+     * @param fileName nazwa pliku z ustawieniami
+     * @return obiekt danych konfiguracji
+     */
     public static ConfigurationData getConfiguration(String fileName) {
         try {
             var data = readAllLines(fileName);
@@ -24,6 +31,11 @@ public class ConfigurationProvider {
         }
     }
 
+    /**
+     * @param fileName nazwa pliku do przeczytania
+     * @return string ze wszystkimi linijkami z pliku złączonymi
+     * @throws IOException wyjątek rzucany kiedy nie uda się odczytać pliku
+     */
     private static String readAllLines(String fileName) throws IOException {
         var input = ResourceProvider.getResource(fileName);
         var reader = new BufferedReader(new InputStreamReader(input));

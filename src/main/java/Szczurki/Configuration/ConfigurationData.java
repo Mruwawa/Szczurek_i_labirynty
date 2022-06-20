@@ -2,6 +2,9 @@ package Szczurki.Configuration;
 
 import java.util.ArrayList;
 
+/**
+ * Klasa odpowiedzialna za trzymanie danych konfiguracyjnych całej aplikacji
+ */
 public class ConfigurationData {
     private int repeatCount;
     private ArrayList<SimulationSettings> simulationSettingsList;
