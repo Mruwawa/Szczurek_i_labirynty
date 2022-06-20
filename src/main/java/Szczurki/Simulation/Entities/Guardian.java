@@ -9,6 +9,8 @@ import Szczurki.Utilities.Vector;
 
 import java.util.Random;
 
+//
+
 public class Guardian implements IEntity, IUpdatable {
 
     final int speed;
@@ -44,13 +46,6 @@ public class Guardian implements IEntity, IUpdatable {
 
         possibleMoves.remove(lastMove.reversed());
 
-        //jeśli strażnik jest obok wyjścia, to musi się cofnąć (bo nie może opuścić labiryntu)
-        for (var move : possibleMoves) {
-            if (board.isOutside(Vector.add(pos, move))) {
-                return lastMove.reversed();
-            }
-        }
-
         //sprawdzenie, czy strażnik ma w zasięgu jakieś zwierzątko (jeśli jest ich więcej, złapane zostaje to, które było dostrzeżone jako pierwsze)
         do {
             var random = new Random();
@@ -60,7 +55,7 @@ public class Guardian implements IEntity, IUpdatable {
             //usuwamy wybrany ruch z możliwych ruchów, żeby ich nie powtarzać
             preferredMoves.remove(candidateMoveIndex);
 
-            if (isAnimalThere(candidateMove, board.getMap())){
+            if (isAnimalThere(candidateMove, board)){
 
                     var animal = (Animal)board.getEntityAt(Vector.add(pos, candidateMove));
 
@@ -83,7 +78,7 @@ public class Guardian implements IEntity, IUpdatable {
             //usuwamy wybrany ruch z możliwych ruchów, żeby ich nie powtarzać
             possibleMoves.remove(candidateMoveIndex);
 
-            if (canMove(candidateMove, board.getMap())) {
+            if (canMove(candidateMove, board)) {
                 return candidateMove;
             }
 
@@ -93,17 +88,22 @@ public class Guardian implements IEntity, IUpdatable {
         return lastMove.reversed();
     }
 
-    protected boolean canMove(Vector moveBy, IEntity[][] entities) {
-        var chosenTile = entities[pos.x + moveBy.x][pos.y + moveBy.y];
+    protected boolean canMove(Vector moveBy, Board board) {
+        if(!board.isOutside(Vector.add(pos,moveBy))) {
+            var chosenTile = board.getEntityAt(Vector.add(pos, moveBy));
 
-        //strażnik nie może przemieścić się w miejsce gdzie jest ściana
-        return !(chosenTile instanceof Wall || chosenTile instanceof Obstacle);
+            //strażnik nie może przemieścić się w miejsce gdzie jest ściana
+            return !(chosenTile instanceof Wall || chosenTile instanceof Obstacle);
+        }
+        return false;
     }
 
-    protected boolean isAnimalThere(Vector moveBy, IEntity[][] entities){
-        var chosenTile = entities[pos.x + moveBy.x][pos.y + moveBy.y];
-
-        return chosenTile instanceof Animal;
+    protected boolean isAnimalThere(Vector moveBy, Board board){
+        if(!board.isOutside(Vector.add(pos,moveBy))){
+            var chosenTile = board.getEntityAt(Vector.add(pos, moveBy));
+            return chosenTile instanceof Animal;
+        }
+        return false;
     }
 
 }

@@ -1,8 +1,8 @@
 {
   "repeatCount": 1000,
-  "rendererType": "",
+  "rendererType": "WINDOW",
   "resultsWriterType": "CSV",
-  "frameTime": 200,
+  "frameTime": 300,
   "animalNames": [
     "Kłapcio",
     "Dee dee",
