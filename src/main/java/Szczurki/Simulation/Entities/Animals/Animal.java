@@ -54,7 +54,6 @@ public abstract class Animal implements IEntity, IUpdatable {
             var obstacle = (Obstacle) board.getEntityAt(Vector.add(pos, nextMove));
             if (obstacle.isActive()) {
                 this.neighbours = getNeighbours(board);
-
                 obstacle.interact(this);
                 return;
             }
@@ -144,6 +143,10 @@ public abstract class Animal implements IEntity, IUpdatable {
 
     public int getStrength() {
         return this.strength;
+    }
+
+    public int getSpeed() {
+        return this.speed;
     }
 
     public boolean isActive() {
