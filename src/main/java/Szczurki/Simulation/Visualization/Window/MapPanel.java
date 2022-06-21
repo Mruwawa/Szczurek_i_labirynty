@@ -5,7 +5,6 @@ import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
-import java.util.Objects;
 
 public class MapPanel extends JPanel {
 
@@ -51,8 +50,8 @@ public class MapPanel extends JPanel {
                     g.drawImage(mapping, x * squareSize, y * squareSize, null);
                     continue;
                 }
-                if (colorMappings.containsKey(gridItem.getClass())) {
-                    g.setColor(colorMappings.get(gridItem.getClass()));
+                if (WindowRendererKeys.COLOR_MAPPINGS.containsKey(gridItem.getClass())) {
+                    g.setColor(WindowRendererKeys.COLOR_MAPPINGS.get(gridItem.getClass()));
                     g.fillRect(x * squareSize, y * squareSize, squareSize, squareSize);
                     continue;
                 }
