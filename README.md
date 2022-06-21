@@ -1,7 +1,8 @@
 
 # Szczurek i labirynty
 
-Projekt na programowanie obiektowe
+Projekt na programowanie obiektowe jest to symulacja agentów - zwierząt w labiryncie.
+
 
 Program można uruchomić za pomocą polecenia ```gradle run ```, lub zbudować za pomocą ```gradle jar```, a następnie uruchomić za pomocą ```java -jar Szczurek_i_labirynty-1.0-SNAPSHOT.jar``` w folderze ```Szczurek_i_labirynty\build\libs```
 
