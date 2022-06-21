@@ -7,9 +7,18 @@ import Szczurki.Utilities.Vector;
 
 import java.util.List;
 
+/**
+ * Klasa reprezentująca planszę
+ */
 public class Board {
 
+    /**
+     * Tablica reprezentująca elementy na planszy i ich położenie
+     */
     private final IEntity[][] _map;
+    /**
+     * Lista agentów
+     */
     private final List<IUpdatable> _updatableEntities;
 
     public Board(List<IUpdatable> updatableEntities, IEntity[][] map) {
@@ -17,6 +26,10 @@ public class Board {
         _map = map;
     }
 
+    /**
+     * @param vector Położenie elementu
+     * @return Czy podaje położenie znajduje się w granicach planszy
+     */
     public boolean isOutside(Vector vector) {
         return vector.x < 0 ||
                 vector.x >= _map.length ||
@@ -24,10 +37,18 @@ public class Board {
                 vector.y >= _map[0].length;
     }
 
+    /**
+     * @param start Pozycja startowa
+     * @param moveBy Wektor, o który chcemy przesunąć element
+     */
     public void move(Vector start, Vector moveBy) {
         teleport(start, Vector.add(start, moveBy));
     }
 
+    /**
+     * @param start Pozycja startowa
+     * @param end Pozycja docelowa elementu
+     */
     public void teleport(Vector start, Vector end) {
         if (start.equals(end)) return;
 
@@ -37,14 +58,31 @@ public class Board {
     }
 
 
+    /**
+     * @param entity agent
+     * @param position  jego pozycja
+     */
     public void remove(IUpdatable entity, Vector position) {
+        //Jeżeli usuwamy zwierzaka, to ustawiamy jego status aktywności na false
         if(entity instanceof Animal) ((Animal) entity).setActive(false);
+        //Czyścimy miejsce elementu na planszy
         _map[position.x][position.y] = null;
     }
 
+    /**
+     * @param vector Pozycja
+     * @return Element znajdujący się na podanej pozycji
+     */
     public IEntity getEntityAt(Vector vector)
     {
         return _map[vector.x][vector.y];
+    }
+
+    /**
+     * @return Czy na planszy są jeszcze aktywne zwierzęta
+     */
+    public boolean areThereAnyActiveAnimalsLeft(){
+        return _updatableEntities.stream().anyMatch(x -> x instanceof Animal && ((Animal)x).isActive());
     }
 
     public IEntity[][] getMap()
@@ -54,9 +92,5 @@ public class Board {
     public List<IUpdatable> getUpdatableEntities()
     {
         return _updatableEntities;
-    }
-
-    public boolean areThereAnyActiveAnimalsLeft(){
-        return _updatableEntities.stream().anyMatch(x -> x instanceof Animal && ((Animal)x).isActive());
     }
 }

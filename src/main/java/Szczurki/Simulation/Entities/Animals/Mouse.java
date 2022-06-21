@@ -18,6 +18,11 @@ public class Mouse extends Animal{
         }
         return null;
     }
+
+    /**
+     * @return Inteligencja powiększona na podstawie inteligencji sąsiadów według wzoru:
+     * (siła sąsiada * kooperacja tego zwierzaka) / 10
+     */
     @Override
     public int getIntelligence() {
         int intelligenceToReturn = this.intelligence;
@@ -30,6 +35,10 @@ public class Mouse extends Animal{
         return intelligenceToReturn;
     }
 
+    /**
+     * @return Siła powiększona na podstawie sił sąsiadów według wzoru:
+     * (siła sąsiada * kooperacja tego zwierzaka) / 10
+     */
     @Override
     public int getStrength() {
         int strengthToReturn = this.strength;

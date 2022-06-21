@@ -12,6 +12,9 @@ import java.util.concurrent.TimeUnit;
 
 import static java.util.Map.entry;
 
+/**
+ * Renderer wyświetlający aktualny stan symulacji w konsoli
+ */
 public class ConsoleRenderer implements IRenderer {
 
     private final int _frameTime;
@@ -22,6 +25,10 @@ public class ConsoleRenderer implements IRenderer {
     }
 
 
+    /**
+     * Lista mapująca klasę na jej reprezentację
+     * potrzebną do wyświetlenia
+     */
     private final Map<Class<?>, String> colorMappings = Map.ofEntries(
             entry(Guardian.class, ConsoleColors.RED_BACKGROUND + "GRL"),
             entry(Rat.class, ConsoleColors.YELLOW_BACKGROUND + " S "),
@@ -33,18 +40,23 @@ public class ConsoleRenderer implements IRenderer {
             entry(Obstacle.class, ConsoleColors.BLACK_BACKGROUND + ConsoleColors.RED + "TRP")
     );
 
+    /**
+     * @param entities Tablica reprezentująca mapę
+     */
     public void render(IEntity[][] entities) {
         var builder = new StringBuilder();
 
-
+        //dopisujemy do stringa kod czyszczący konsolę
         builder.append("\033[H\033[2J");
         for (int y = 0; y < entities[0].length; y++) {
             for (int x = 0; x < entities.length; x++) {
+                //dopisujemy do stringa reprezentację elementu mapy
                 if (entities[x][y] != null && colorMappings.containsKey(entities[x][y].getClass())) {
                     builder.append(colorMappings.get(entities[x][y].getClass()));
                     builder.append(ConsoleColors.RESET);
                     continue;
                 }
+                //jeśli to pole jest puste wypisujemy biały kwardat
                 builder.append(ConsoleColors.WHITE_BACKGROUND);
                 builder.append("   ");
                 builder.append(ConsoleColors.RESET);
@@ -54,6 +66,8 @@ public class ConsoleRenderer implements IRenderer {
 
         System.out.println(builder);
 
+        //czekamy określoną ilość milisekund przed następnym
+        //odświeżeniem mapy
         try {
             TimeUnit.MILLISECONDS.sleep(_frameTime);
         } catch (InterruptedException e) {
@@ -61,6 +75,10 @@ public class ConsoleRenderer implements IRenderer {
         }
     }
 
+    /**
+     * Metoda zatrzymująca działanie renderera
+     * W tym przypadku nic nie robi, bo jest to niepotrzebne
+     */
     @Override
     public void stop() {
 

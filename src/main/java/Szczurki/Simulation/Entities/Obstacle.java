@@ -3,6 +3,14 @@ package Szczurki.Simulation.Entities;
 import Szczurki.Simulation.Entities.Animals.Animal;
 import Szczurki.Simulation.Entities.Interfaces.IEntity;
 
+/**
+ * Klasa reprezentująca przeszkodę
+ * Przeszkoda ma swoje statystyki
+ * oraz może być aktywna lub nieaktywna
+ *
+ * Implementuje interfejs
+ * IEntity - który pozwala na umieszczenie jej instancji na mapie
+ */
 public class Obstacle implements IEntity {
     private int requiredIntelligence, requiredStrength;
     private boolean active;
@@ -10,18 +18,21 @@ public class Obstacle implements IEntity {
     public Obstacle(int requiredIntelligence, int requiredStrength) {
         this.requiredIntelligence = requiredIntelligence;
         this.requiredStrength = requiredStrength;
-        this.active = true;
+        active = true;
     }
 
 
     /**
-     * @param animal Zwierzę, które
+     * Metoda przeprowadza interakcję pomiędzy zwierzęciem a tą przeszkodą
+     * Jeśli statystyki pułapki są mniejsze niż zwierzaka, zostaje ona wyłączona
+     * Jeśli nie, to zostają one zmniejszone o statystyki zwierzaka
+     * @param animal Zwierzę, które przeprowadza interakcję z przeszkodą
      */
     public void interact(Animal animal)
     {
         if(this.requiredStrength <= animal.getStrength() || this.requiredIntelligence <= animal.getIntelligence())
         {
-            this.active = false;
+            active = false;
             return;
         }
         this.requiredStrength -= animal.getStrength();
@@ -29,6 +40,6 @@ public class Obstacle implements IEntity {
     }
 
     public boolean isActive(){
-        return this.active;
+        return active;
     }
 }

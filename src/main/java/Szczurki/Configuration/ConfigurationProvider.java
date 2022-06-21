@@ -18,10 +18,13 @@ public class ConfigurationProvider {
      */
     public static ConfigurationData getConfiguration(String fileName) {
         try {
+            //czytamy wszystkie linjiki pliku z konfiguracją
             var data = readAllLines(fileName);
+            //konwertujemy je z jsona do instancji klasy
             return new Gson().fromJson(data, ConfigurationData.class);
 
         } catch (Exception e) {
+            //jeśli nie uda nam się wczytać konfiguracji to próbujemy wczytać domyślną konfigurację
             if (!fileName.equals(defaultConfigFileName)) {
                 System.out.println("Wczytywanie konfiguracji nie powiodlo sie :(. Uzywam domyslnej konfiguracji.");
                 return getConfiguration(defaultConfigFileName);

@@ -7,6 +7,9 @@ import Szczurki.Simulation.Visualization.IRenderer;
 
 import java.util.List;
 
+/**
+ * Główna klasa zajmująca się przeprowadzaniej symulacji
+ */
 public class Simulation {
 
     private final SimulationSettings _settings;
@@ -19,15 +22,33 @@ public class Simulation {
         _renderer = renderer;
     }
 
+    /**
+     * Metoda przeprowadzająca symulację
+     */
     public void run() {
         _renderer.render(_board.getMap());
 
         for (int i = 0; i < _settings.getTurnCount(); i++) {
             turn(i);
+            //jeśli nie ma aktywnych zwierząt zatrzymujemy symulację
             if(!_board.areThereAnyActiveAnimalsLeft())
                 break;
         }
         _renderer.stop();
+    }
+
+    /**
+     * @param iteration Numer iteracji
+     */
+    private void turn(int iteration) {
+        //dla każdego agenta
+        for (var entity : _board.getUpdatableEntities()) {
+            //jeśli agent jest nieaktywnym zwierzakiem to go pomijamy
+            if (entity instanceof Animal && !((Animal) entity).isActive()) continue;
+
+            entity.update(_board, iteration);
+        }
+        _renderer.render(_board.getMap());
     }
 
     public List<IUpdatable> getResults()
@@ -35,14 +56,4 @@ public class Simulation {
         return _board.getUpdatableEntities();
     }
 
-    private void turn(int iteration) {
-
-        for (var entity : _board.getUpdatableEntities()) {
-
-            if (entity instanceof Animal && !((Animal) entity).isActive()) continue;
-
-            entity.update(_board, iteration);
-        }
-        _renderer.render(_board.getMap());
-    }
 }

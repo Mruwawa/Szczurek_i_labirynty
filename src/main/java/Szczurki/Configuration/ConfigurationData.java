@@ -1,5 +1,8 @@
 package Szczurki.Configuration;
 
+import Szczurki.Results.ResultsWriterType;
+import Szczurki.Simulation.Visualization.RendererType;
+
 import java.util.ArrayList;
 
 /**

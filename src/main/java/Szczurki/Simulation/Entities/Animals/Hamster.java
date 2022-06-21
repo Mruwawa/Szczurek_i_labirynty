@@ -1,6 +1,5 @@
 package Szczurki.Simulation.Entities.Animals;
 
-import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Utilities.Vector;
 
 import java.util.Random;

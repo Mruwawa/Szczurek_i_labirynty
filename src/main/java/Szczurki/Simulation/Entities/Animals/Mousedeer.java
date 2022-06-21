@@ -12,6 +12,10 @@ public class Mousedeer extends Animal{
         return lastMove;
     }
 
+    /**
+     * @return Siła powiększona na podstawie sił sąsiadów według wzoru:
+     * (siła sąsiada * kooperacja tego zwierzaka) / 10
+     */
     @Override
     public int getStrength() {
         int strengthToReturn = this.strength;

@@ -1,6 +1,5 @@
 package Szczurki.Results;
 
-import Szczurki.Configuration.ResultsWriterType;
 import Szczurki.Configuration.SimulationSettings;
 import Szczurki.Simulation.Entities.Interfaces.IUpdatable;
 

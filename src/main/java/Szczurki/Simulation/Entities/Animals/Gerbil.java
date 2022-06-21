@@ -1,6 +1,5 @@
 package Szczurki.Simulation.Entities.Animals;
 
-import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Utilities.Vector;
 
 public class Gerbil extends Animal {
@@ -12,6 +11,10 @@ public class Gerbil extends Animal {
         return lastMove.turnLeft();
     }
 
+    /**
+     * @return Siła powiększona na podstawie sił sąsiadów według wzoru:
+     * (siła sąsiada * kooperacja tego zwierzaka) / 10
+     */
     @Override
     public int getStrength() {
         int strengthToReturn = this.strength;

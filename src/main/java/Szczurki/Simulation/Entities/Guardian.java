@@ -24,10 +24,6 @@ public class Guardian implements IEntity, IUpdatable {
         speed = 2;
     }
 
-    /**
-     * @param board     plansza, na której odbywa się symulacja
-     * @param iteration numer tury
-     */
     @Override
     public void update(Board board, int iteration) {
 
@@ -97,12 +93,6 @@ public class Guardian implements IEntity, IUpdatable {
         return lastMove.reversed();
     }
 
-    /**
-     * tutaj sobie piszesz komentarz
-     * @param moveBy parametr 1 to wektor który cośtam cośtam
-     * @param entities
-     * @return
-     */
     protected boolean canMove(Vector moveBy, IEntity[][] entities) {
         var chosenTile = entities[pos.x + moveBy.x][pos.y + moveBy.y];
 

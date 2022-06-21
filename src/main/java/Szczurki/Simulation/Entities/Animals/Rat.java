@@ -10,6 +10,10 @@ public class Rat extends Animal {
         return lastMove.turnRight();
     }
 
+    /**
+     * @return Inteligencja powiększona na podstawie inteligencji sąsiadów według wzoru:
+     * (siła sąsiada * kooperacja tego zwierzaka) / 10
+     */
     @Override
     public int getIntelligence() {
         int intelligenceToReturn = this.intelligence;

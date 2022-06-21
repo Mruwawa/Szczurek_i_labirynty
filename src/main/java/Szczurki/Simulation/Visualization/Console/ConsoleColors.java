@@ -1,5 +1,9 @@
 package Szczurki.Simulation.Visualization.Console;
 
+/**
+ * Klasa zawierająca kody ASCII
+ * potrzebne do wyświetlania symulacji w konsoli
+ */
 class ConsoleColors {
     public static final String RESET = "\u001B[0m";
 

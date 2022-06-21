@@ -1,4 +1,4 @@
-package Szczurki.Configuration;
+package Szczurki.Simulation.Visualization;
 
 /**
  * Rodzaje rendererów

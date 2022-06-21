@@ -132,6 +132,11 @@ public abstract class Animal implements IEntity, IUpdatable {
         return new Vector(0, 0);
     }
 
+    /**
+     * @param moveBy Wektor o który chcemy się przesunąć
+     * @param board Plansza
+     * @return Czy ruch jest możliwy
+     */
     protected boolean canMove(Vector moveBy, Board board) {
         var chosenTile = board.getEntityAt(Vector.add(pos, moveBy));
 
@@ -143,10 +148,17 @@ public abstract class Animal implements IEntity, IUpdatable {
         return true;
     }
 
+    /**
+     * @return Ruch preferowany przez zwierzaka
+     */
     protected Vector choosePreferredMove() {
         return null;
     }
 
+    /**
+     * @param board Plansza
+     * @return Lista zwierząt, które znajdują się obok tego zwierzaka
+     */
     private ArrayList<Animal> getNeighbours(Board board) {
         var currentNeighbours = new ArrayList<Animal>();
 

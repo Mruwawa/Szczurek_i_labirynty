@@ -6,6 +6,9 @@ import Szczurki.Simulation.Visualization.IRenderer;
 import javax.swing.*;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Renderer wyświetlający symulację w okienku
+ */
 public class WindowRenderer implements IRenderer {
     private final MapPanel _panel;
     private final JFrame _window;
@@ -23,9 +26,14 @@ public class WindowRenderer implements IRenderer {
     }
 
 
+    /**
+     * @param entities Tablica reprezentująca mapę
+     */
     public void render(IEntity[][] entities) {
+        //odświeżamy element z mapą
         _panel.updateGrid(entities);
 
+        //czekamy określoną ilość milisekund
         try {
             TimeUnit.MILLISECONDS.sleep(_frameTime);
         } catch (InterruptedException e) {
@@ -33,6 +41,10 @@ public class WindowRenderer implements IRenderer {
         }
     }
 
+    /**
+     * Metoda zatrzymująca działanie renderera
+     * w tym przypadku niszczy okienko
+     */
     @Override
     public void stop() {
         _window.setVisible(false);
