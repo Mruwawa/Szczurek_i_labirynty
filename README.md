@@ -93,3 +93,12 @@ Przykładowy plik labiryntu:
 Gdzie ```#``` reprezentuje ścianę  a ```@``` reprezentuje przeszkodę
 Jeśli chcemy dodać nowy plik labiryntu należy go dodać do folderu ```labyrinths``` w tym samym folderze co plik .jar
 Musi on mieć wszystkie linijki tej samej długości.
+
+
+##Dokumentacja projektu
+
+![Alt text](readme_resources/0001.jpg?raw=true)
+![Alt text](readme_resources/0002.jpg?raw=true)
+![Alt text](readme_resources/0003.jpg?raw=true)
+![Alt text](readme_resources/0004.jpg?raw=true)
+![Alt text](readme_resources/0005.jpg?raw=true)
