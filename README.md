@@ -95,7 +95,9 @@ Jeśli chcemy dodać nowy plik labiryntu należy go dodać do folderu ```labyrin
 Musi on mieć wszystkie linijki tej samej długości.
 
 
-##Dokumentacja projektu
+## Dokumentacja projektu
+[Dokumentacja w Javadocu](https://mruwawa.github.io/Szczurek_i_labirynty/)
+
 
 ![Alt text](readme_resources/0001.jpg?raw=true)
 ![Alt text](readme_resources/0002.jpg?raw=true)
