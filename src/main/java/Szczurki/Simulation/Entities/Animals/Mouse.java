@@ -30,7 +30,7 @@ public class Mouse extends Animal{
         int intelligenceToReturn = this.intelligence;
 
         for (var neighbour : neighbours) {
-            if (neighbour instanceof Rat) {
+            if (neighbour instanceof Mouse) {
                 intelligenceToReturn += (neighbour.intelligence * cooperation) / 10;
             }
         }
