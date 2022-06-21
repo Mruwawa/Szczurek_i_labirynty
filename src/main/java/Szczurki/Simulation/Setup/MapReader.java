@@ -38,9 +38,9 @@ public class MapReader implements IMapReader {
 
 
         } catch (IOException e) {
-            if (!fileName.equals(Keys.MAP_DIRECTORY + "/" + Keys.DEFAULT_MAP_FILENAME)) {
+            if (!fileName.equals(Keys.DEFAULT_MAP_FILENAME)) {
                 System.out.println("Wczytywanie mapy nie powiodlo sie. Wczytuje domyslna mape");
-                return getMap(Keys.MAP_DIRECTORY + "/" + Keys.DEFAULT_MAP_FILENAME);
+                return getMap(Keys.DEFAULT_MAP_FILENAME);
             }
             System.out.println("Wczytywanie domyslnej mapy tez sie nie powiodlo!");
             return null;
