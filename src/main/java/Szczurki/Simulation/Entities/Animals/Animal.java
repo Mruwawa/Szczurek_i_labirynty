@@ -13,13 +13,14 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Główna klasa reprezentująca zwierzęta, implementuje interfejsy
+ * Główna klasa reprezentująca zwierzęta
+ * implementuje interfejsy:
  * IEntity - który pozwala na umieszczenie jej instancji na mapie
  * IUpdateable - który pozwala na aktualizowanie stanu w trakcie trwania symulacji
  */
 public abstract class Animal implements IEntity, IUpdatable {
 
-    protected final int speed, intelligence, strength, cooperation;
+    protected final int intelligence, strength, cooperation;
     final String name;
     public final Vector pos;
     protected final Vector lastMove;
@@ -29,12 +30,11 @@ public abstract class Animal implements IEntity, IUpdatable {
     private int timeOfFinish;
     private CauseOfFinish causeOfFinish;
 
-    Animal(int x, int y, String name, int speed, int intelligence, int strength, int cooperation) {
+    Animal(int x, int y, String name, int intelligence, int strength, int cooperation) {
         pos = new Vector(x, y);
         lastMove = Vector.ZERO();
 
         this.name = name;
-        this.speed = speed;
         this.intelligence = intelligence;
         this.strength = strength;
         this.cooperation = cooperation;
@@ -70,7 +70,6 @@ public abstract class Animal implements IEntity, IUpdatable {
             //jeżeli jest aktywna to przeprowadzamy interakcję i czekamy
             if (obstacle.isActive()) {
                 this.neighbours = getNeighbours(board);
-
                 obstacle.interact(this);
                 //wychodzimy z metody i nie wykonujemy ruchu,
                 // ponieważ zużyliśmy tą turę na interakcję z przeszkodą

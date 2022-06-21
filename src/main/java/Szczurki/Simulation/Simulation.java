@@ -2,6 +2,7 @@ package Szczurki.Simulation;
 
 import Szczurki.Configuration.SimulationSettings;
 import Szczurki.Simulation.Entities.Animals.Animal;
+import Szczurki.Simulation.Entities.Guardian;
 import Szczurki.Simulation.Entities.Interfaces.IUpdatable;
 import Szczurki.Simulation.Visualization.IRenderer;
 

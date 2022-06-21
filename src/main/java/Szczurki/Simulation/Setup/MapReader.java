@@ -4,6 +4,7 @@ import Szczurki.Configuration.ResourceProvider;
 import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Simulation.Entities.Obstacle;
 import Szczurki.Simulation.Entities.Wall;
+import Szczurki.Utilities.Keys;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,15 +14,13 @@ import java.util.ArrayList;
 public class MapReader implements IMapReader {
 
     ArrayList<String> labirynth = new ArrayList<>();
-    private final String mapDirectory = "labyrinths/";
-    private final String defaultMapFileName = "labirynt domyslny.txt";
 
     public IEntity[][] getMap(String fileName) {
 
 
         try {
 
-            var inputStream = ResourceProvider.getResource(mapDirectory + fileName);
+            var inputStream = ResourceProvider.getResource(Keys.MAP_DIRECTORY + "/" + fileName);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
             String line;
@@ -32,9 +31,9 @@ public class MapReader implements IMapReader {
 
 
         } catch (IOException e) {
-            if (!fileName.equals(mapDirectory + defaultMapFileName)) {
+            if (!fileName.equals(Keys.MAP_DIRECTORY + "/" + Keys.DEFAULT_MAP_FILENAME)) {
                 System.out.println("Wczytywanie mapy nie powiodlo sie. Wczytuje domyslna mape");
-                return getMap(mapDirectory + defaultMapFileName);
+                return getMap(Keys.MAP_DIRECTORY + "/" + Keys.DEFAULT_MAP_FILENAME);
             }
             System.out.println("Wczytywanie domyslnej mapy tez sie nie powiodlo!");
             return null;
@@ -44,11 +43,11 @@ public class MapReader implements IMapReader {
 
         for (int i = 0; i < labirynth.get(0).length(); ++i) {
             for (int j = 0; j < labirynth.size(); ++j) {
-                if (labirynth.get(j).charAt(i) == '#') {
+                if (labirynth.get(j).charAt(i) == Keys.WALL_SYMBOL) {
                     map[i][j] = new Wall();
                 }
 
-                if (labirynth.get(j).charAt(i) == '@') {
+                if (labirynth.get(j).charAt(i) == Keys.OBSTACLE_SYMBOL) {
                     map[i][j] = new Obstacle(10, 10);
                 }
 

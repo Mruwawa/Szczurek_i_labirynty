@@ -1,5 +1,6 @@
 package Szczurki.Configuration;
 
+import Szczurki.Utilities.Keys;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -25,9 +26,9 @@ public class ConfigurationProvider {
 
         } catch (Exception e) {
             //jeśli nie uda nam się wczytać konfiguracji to próbujemy wczytać domyślną konfigurację
-            if (!fileName.equals(defaultConfigFileName)) {
+            if (!fileName.equals(Keys.DEFAULT_CONFIG_FILENAME)) {
                 System.out.println("Wczytywanie konfiguracji nie powiodlo sie :(. Uzywam domyslnej konfiguracji.");
-                return getConfiguration(defaultConfigFileName);
+                return getConfiguration(Keys.DEFAULT_CONFIG_FILENAME);
             }
             System.out.println("Wczytywanie domyslnej konfiguracji tez sie nie powiodlo :o");
             return null;

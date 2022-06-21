@@ -1,16 +1,12 @@
 package Szczurki.Simulation.Visualization.Window;
 
 import Szczurki.Configuration.ResourceProvider;
-import Szczurki.Simulation.Entities.Animals.*;
-import Szczurki.Simulation.Entities.Guardian;
-import Szczurki.Simulation.Entities.Obstacle;
-import Szczurki.Simulation.Entities.Wall;
+import Szczurki.Utilities.Keys;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,7 +14,6 @@ import java.util.Map;
  */
 public class ImageLoader {
 
-    private final String textureDirectory = "textures/";
     private final int _imgSize;
 
     /**
@@ -33,21 +28,9 @@ public class ImageLoader {
      */
     public Map<Class<?>, Image> getImageMappings() {
         var output = new HashMap<Class<?>, Image>();
-        //definiujemy listę wszyskich klas
-        var classes = List.of(
-                Rat.class,
-                Mousedeer.class,
-                Gerbil.class,
-                Hamster.class,
-                Mouse.class,
-                Wall.class,
-                Obstacle.class,
-                Guardian.class);
-
-        classes.forEach(type -> {
+        Keys.ENTITY_CLASSES.forEach(type -> {
             try {
-                //dla każdej klasy próbujemy wczytać jej teksturę
-                var inputStream = ResourceProvider.getResource(textureDirectory + type.getSimpleName() + ".png");
+                var inputStream = ResourceProvider.getResource(Keys.TEXTURE_DIRECTORY + "/" + type.getSimpleName() + Keys.TEXTURE_FILES_EXTENSION);
                 var originalImg = ImageIO.read(inputStream);
                 //skalujemy odpowiednio teksturę
                 var img = resizeImage(originalImg, _imgSize, _imgSize);
