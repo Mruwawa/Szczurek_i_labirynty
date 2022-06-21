@@ -8,7 +8,7 @@ import java.util.Random;
 public class Hamster extends Animal {
 
     public Hamster(int x, int y, String name) {
-        super(x, y, name,4,6,2,3);
+        super(x, y, name,1,6,2,3);
     }
     public Vector choosePreferredMove(){
         Random chance = new Random();

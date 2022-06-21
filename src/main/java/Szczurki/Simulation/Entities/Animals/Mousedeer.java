@@ -3,13 +3,20 @@ package Szczurki.Simulation.Entities.Animals;
 import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Utilities.Vector;
 
+import java.util.Random;
+
 public class Mousedeer extends Animal{
 
     public Mousedeer(int x, int y, String name) {
-        super(x, y, name,8,2,6,3);
+        super(x, y, name,3,2,6,3);
     }
     public Vector choosePreferredMove(){
-        return lastMove;
+        Random chance = new Random();
+        int chanceForTurningBack = chance.nextInt(101);
+        if(chanceForTurningBack<21){
+            return lastMove.reversed();
+        }
+        return null;
     }
 
     @Override
