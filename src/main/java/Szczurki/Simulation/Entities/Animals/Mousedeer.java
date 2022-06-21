@@ -1,12 +1,21 @@
 package Szczurki.Simulation.Entities.Animals;
 
-import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Utilities.Vector;
 
 import java.util.Random;
 
+/**
+ * Klasa reprezentująca myszojelenia
+ * przechowująca statystyki oraz preferowany ruch
+ * dla każdego przedstawiciela gatunku
+ */
 public class Mousedeer extends Animal{
 
+    /**
+     * @param x położenie poziome na mapie
+     * @param y - położenie pionowe na mapie
+     * @param name - indywidualne imię danego przedstawiciela gatunku
+     */
     public Mousedeer(int x, int y, String name) {
         super(x, y, name,2,6,3);
     }

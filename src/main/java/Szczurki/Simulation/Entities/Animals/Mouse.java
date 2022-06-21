@@ -1,12 +1,19 @@
 package Szczurki.Simulation.Entities.Animals;
 
-import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Utilities.Vector;
 
-import java.util.Random;
-
+/**
+ * Klasa reprezentująca mysz
+ * przechowująca statystyki oraz preferowany ruch
+ * dla każdego przedstawiciela gatunku
+ */
 public class Mouse extends Animal{
 
+    /**
+     * @param x - położenie poziome na mapie
+     * @param y - położenie pionowe na mapie
+     * @param name - indywidualne imię danego przedstawiciela gatunku
+     */
     public Mouse(int x, int y, String name) {
         super(x, y, name,3,4,5);
     }

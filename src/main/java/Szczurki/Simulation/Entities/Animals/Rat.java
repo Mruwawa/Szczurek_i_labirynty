@@ -2,7 +2,17 @@ package Szczurki.Simulation.Entities.Animals;
 
 import Szczurki.Utilities.Vector;
 
+/**
+ * Klasa reprezentująca szczura
+ * przechowująca statystyki oraz preferowany ruch
+ * dla każdego przedstawiciela gatunku
+ */
 public class Rat extends Animal {
+    /**
+     * @param x - położenie poziome na mapie
+     * @param y - położenie pionowe na mapie
+     * @param name - indywidualne imię danego przedstawiciela gatunku
+     */
     public Rat(int x, int y, String name) {
         super(x, y, name, 4, 7, 6);
     }

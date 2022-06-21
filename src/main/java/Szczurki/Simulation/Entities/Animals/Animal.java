@@ -30,6 +30,15 @@ public abstract class Animal implements IEntity, IUpdatable {
     private int timeOfFinish;
     private CauseOfFinish causeOfFinish;
 
+    /**
+     * Metoda przechowująca informacje o zwierzętach
+     * @param x - poziome położenie na mapie
+     * @param y - pionowe położenie na mapie
+     * @param name - imię zwierzęcia
+     * @param intelligence - inteligencja zwierzęcia
+     * @param strength - siła zwierzęcia
+     * @param cooperation - skłonność zwierzęcia do kooperacji z innymi przedstawicielami gatunku
+     */
     Animal(int x, int y, String name, int intelligence, int strength, int cooperation) {
         pos = new Vector(x, y);
         lastMove = Vector.ZERO();

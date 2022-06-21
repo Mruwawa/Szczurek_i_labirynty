@@ -9,8 +9,9 @@ import Szczurki.Utilities.Vector;
 
 import java.util.Random;
 
-//
-
+/**
+ * Klasa reprezentująca strażnika
+ */
 public class Guardian implements IEntity, IUpdatable {
 
     final int speed;
@@ -18,6 +19,10 @@ public class Guardian implements IEntity, IUpdatable {
     protected final Vector pos;
     protected final Vector lastMove;
 
+    /**
+     * @param x - położenie poziome na mapie
+     * @param y - położenie pionowe na mapie
+     */
     public Guardian(int x, int y) {
         pos = new Vector(x, y);
         lastMove = Vector.ZERO();
@@ -26,6 +31,13 @@ public class Guardian implements IEntity, IUpdatable {
         speed = 2;
     }
 
+    /**
+     * Metoda aktualizująca położenie strażnika
+     * analizuje możliwe ruchy oraz sprawdza możliwość złapania zwierzęcia
+     * wykonuje ruchy
+     * @param board plansza, na której odbywa się symulacja
+     * @param iteration numer tury
+     */
     @Override
     public void update(Board board, int iteration) {
 
@@ -35,6 +47,11 @@ public class Guardian implements IEntity, IUpdatable {
         lastMove.set(nextMove);
     }
 
+    /**
+     * @param board - plansza, na której odbywa się symulacja
+     * @param iteration - numer tury
+     * @return - wektor wybranego ruchu
+     */
     protected Vector chooseNextMove(Board board, int iteration) {
 
         //deklarujemy zbiór możliwych ruchów oraz preferowanych ruchów (czyli takich, które zakończą się złapaniem zwierzęcia)
@@ -88,6 +105,12 @@ public class Guardian implements IEntity, IUpdatable {
         return lastMove.reversed();
     }
 
+    /**
+     * metoda sprawdzająca możliwość poruszenia się na wybrane pole
+     * @param moveBy - wektor sprawdzanego ruchu
+     * @param board - plansza, na której odbywa się symulacja
+     * @return - wartość true/false informująca o możliwości ruchu
+     */
     protected boolean canMove(Vector moveBy, Board board) {
         if(!board.isOutside(Vector.add(pos,moveBy))) {
             var chosenTile = board.getEntityAt(Vector.add(pos, moveBy));
@@ -98,6 +121,12 @@ public class Guardian implements IEntity, IUpdatable {
         return false;
     }
 
+    /**
+     * metoda sprawdzająca obecność zwierzęcia na wybranym polu
+     * @param moveBy - wektor sprawdzanego ruchu
+     * @param board - plansza, na której odbywa się symulacja
+     * @return - wartość true/false informująca o obecności zwierzęcia
+     */
     protected boolean isAnimalThere(Vector moveBy, Board board){
         if(!board.isOutside(Vector.add(pos,moveBy))){
             var chosenTile = board.getEntityAt(Vector.add(pos, moveBy));
