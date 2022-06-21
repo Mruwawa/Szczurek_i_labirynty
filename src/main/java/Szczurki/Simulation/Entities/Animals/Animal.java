@@ -12,12 +12,17 @@ import Szczurki.Simulation.Entities.Wall;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Główna klasa reprezentująca zwierzęta
+ * implementuje interfejsy:
+ * IEntity - który pozwala na umieszczenie jej instancji na mapie
+ * IUpdateable - który pozwala na aktualizowanie stanu w trakcie trwania symulacji
+ */
 public abstract class Animal implements IEntity, IUpdatable {
 
-    //główna klasa po której dziedziczyć będą wszystkie zwierzęta
-    protected final int speed, intelligence, strength, cooperation;
+    protected final int intelligence, strength, cooperation;
     final String name;
-    protected final Vector pos;
+    public final Vector pos;
     protected final Vector lastMove;
     protected ArrayList<Animal> neighbours;
 
@@ -25,12 +30,20 @@ public abstract class Animal implements IEntity, IUpdatable {
     private int timeOfFinish;
     private CauseOfFinish causeOfFinish;
 
-    Animal(int x, int y, String name, int speed, int intelligence, int strength, int cooperation) {
+    /**
+     * Metoda przechowująca informacje o zwierzętach
+     * @param x - poziome położenie na mapie
+     * @param y - pionowe położenie na mapie
+     * @param name - imię zwierzęcia
+     * @param intelligence - inteligencja zwierzęcia
+     * @param strength - siła zwierzęcia
+     * @param cooperation - skłonność zwierzęcia do kooperacji z innymi przedstawicielami gatunku
+     */
+    Animal(int x, int y, String name, int intelligence, int strength, int cooperation) {
         pos = new Vector(x, y);
         lastMove = Vector.ZERO();
 
         this.name = name;
-        this.speed = speed;
         this.intelligence = intelligence;
         this.strength = strength;
         this.cooperation = cooperation;
@@ -38,31 +51,50 @@ public abstract class Animal implements IEntity, IUpdatable {
 
     }
 
+
+    /**
+     * Metoda służy do aktualizowania stanu zwierzęcia
+     * Szuka ruchu, przeprowadza interakcje z przeszkodami
+     * oraz wykonuje ruchy
+     * @param board     plansza, na której odbywa się symulacja
+     * @param iteration numer tury
+     */
     @Override
     public void update(Board board, int iteration) {
 
         var nextMove = chooseNextMove(board);
 
+        //jeżeli następny ruch jest nullem oznacza to, że istnieje możliwość wyjścia z labiryntu
+        //jeśli jest taka możlowiość to zwierzątko to zrobi
         if (nextMove == null) {
             board.remove(this, pos);
             timeOfFinish = iteration;
             causeOfFinish = CauseOfFinish.ESCAPE;
             return;
         }
-
+        //sprawdzamy, czy w miejscu, na które chcemy wejść znajduje się przeszkoda
         if (board.getEntityAt(Vector.add(pos, nextMove)) instanceof Obstacle) {
             var obstacle = (Obstacle) board.getEntityAt(Vector.add(pos, nextMove));
+
+            //jeżeli jest aktywna to przeprowadzamy interakcję i czekamy
             if (obstacle.isActive()) {
                 this.neighbours = getNeighbours(board);
                 obstacle.interact(this);
+                //wychodzimy z metody i nie wykonujemy ruchu,
+                // ponieważ zużyliśmy tą turę na interakcję z przeszkodą
                 return;
             }
         }
 
+        //ruszamy się i zapamiętujemy ostatni ruch
         board.move(pos, nextMove);
         lastMove.set(nextMove);
     }
 
+    /**
+     * @param board Plansza, na której odbywa się symulacja
+     * @return wektor reprezentujący wybrany ruch
+     */
     protected Vector chooseNextMove(Board board) {
         //deklarujemy zbiór możliwych ruchów
         var possibleMoves = Vector.getAllDirections();
@@ -79,13 +111,13 @@ public abstract class Animal implements IEntity, IUpdatable {
         }
 
         //wybieramy preferowany przez zwierzaka ruch (każda klasa ma inną implementację)
-        //i jeżeli możemy go wykonać to to robimy
+        //i jeżeli możemy go wykonać to robimy
         var preferredMove = choosePreferredMove();
         if (preferredMove != null && canMove(preferredMove, board)) {
             return preferredMove;
         }
 
-        //jeżeli nie jesteśmy koło wyjścia, oraz nie możemy wykonać preferowanego ruchu to losujemy nowy
+        //jeżeli nie jesteśmy koło wyjścia oraz nie możemy wykonać preferowanego ruchu to losujemy nowy
         do {
             var random = new Random();
             var candidateMoveIndex = random.nextInt(possibleMoves.size());
@@ -108,10 +140,15 @@ public abstract class Animal implements IEntity, IUpdatable {
         return new Vector(0, 0);
     }
 
+    /**
+     * @param moveBy Wektor o który chcemy się przesunąć
+     * @param board Plansza
+     * @return Czy ruch jest możliwy
+     */
     protected boolean canMove(Vector moveBy, Board board) {
         var chosenTile = board.getEntityAt(Vector.add(pos, moveBy));
 
-        //jeżeli natrafimy na inne zwierze lub na ścianę to nie możemy tam pójść
+        //jeżeli natrafimy na ścianę, inne zwierze lub strażnika to nie możemy tam pójść
         if (chosenTile instanceof Wall || chosenTile instanceof Animal || chosenTile instanceof Guardian) {
             return false;
         }
@@ -119,10 +156,17 @@ public abstract class Animal implements IEntity, IUpdatable {
         return true;
     }
 
+    /**
+     * @return Ruch preferowany przez zwierzaka
+     */
     protected Vector choosePreferredMove() {
         return null;
     }
 
+    /**
+     * @param board Plansza
+     * @return Lista zwierząt, które znajdują się obok tego zwierzaka
+     */
     private ArrayList<Animal> getNeighbours(Board board) {
         var currentNeighbours = new ArrayList<Animal>();
 
@@ -143,10 +187,6 @@ public abstract class Animal implements IEntity, IUpdatable {
 
     public int getStrength() {
         return this.strength;
-    }
-
-    public int getSpeed() {
-        return this.speed;
     }
 
     public boolean isActive() {

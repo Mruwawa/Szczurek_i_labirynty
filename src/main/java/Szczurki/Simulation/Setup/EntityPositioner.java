@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Klasa odpowiedzialna za rozmieszczanie agentów na mapie
+ */
 public class EntityPositioner implements IEntityPositioner {
 
     private final ArrayList<String> _animalNames;
@@ -24,27 +27,38 @@ public class EntityPositioner implements IEntityPositioner {
         _currentPossibleNames = new ArrayList<>();
     }
 
+    /**
+     * Metoda rozmieszcza na mapie agentów według ustawień symulacji
+     * @param map Tablica reprezentująca mapę, na niej zostaną rozstawieni agenci
+     * @return Lista agentów
+     */
     @Override
     public List<IUpdatable> getPlacedEntities(IEntity[][] map) {
         var updatableEntities = new ArrayList<IUpdatable>();
+        //przygotowujemy listę dostępnych miejsc
         var freeSpaces = getFreeSpaces(map);
         var rand = new Random();
 
+        //rozmieszczenie zwierząt na mapie
+        //dla każdego typu zwierzęcia rozmieszczamy je
+        //określoną w ustawieniach ilość razy
         _settings.getAnimalCounts().forEach((animalName, count) ->
         {
-            //rozmieszczenie zwierząt na mapie
             for (int i = 0; i < count; i++) {
-
+                //Jeśli nie da się zmieścić więcej zwierząt na mapie
+                //Wyświetlamy komunikat i wychodzimy z funkcji (z wyrażenia lambda)
                 if (freeSpaces.size() == 0) {
                     System.out.println("Zabrakło miejsc na mapie dla wszystkich zwierząt!");
                     return;
                 }
+                //wybieramy losowe miejsce z dostępnych
                 var index = rand.nextInt(freeSpaces.size());
                 var place = freeSpaces.get(index);
+                //usuwamy to miejsce z dostępnych
                 freeSpaces.remove(place);
 
                 Animal animal = null;
-
+                //tworzymy odpowiednią instancję zwierzaka
                 switch (animalName) {
                     case "gerbils":
                         animal = new Gerbil(place.x, place.y, pickName());
@@ -63,7 +77,9 @@ public class EntityPositioner implements IEntityPositioner {
                         break;
                 }
 
+                //wstawiamy zwierzaka na mapę
                 map[place.x][place.y] = animal;
+                //dodajemy zwierzaka do listy agentów
                 updatableEntities.add(animal);
             }
         });
@@ -87,17 +103,27 @@ public class EntityPositioner implements IEntityPositioner {
         return updatableEntities;
     }
 
+    /**
+     * @return Wybrane losowo imię zwierzaka
+     */
     private String pickName() {
+        //Jeśli skończyły nam się imiona, wypełniamy listę od nowa
         if (_currentPossibleNames.size() == 0) _currentPossibleNames = new ArrayList<>(_animalNames);
 
+        //Wybieramy losowe imię z listy dostępnych
         var random = new Random();
         var index = random.nextInt(_currentPossibleNames.size());
         var pickedName = _currentPossibleNames.get(index);
+        //Usuwamy to imię z listy dostępnych
         _currentPossibleNames.remove(pickedName);
 
         return pickedName;
     }
 
+    /**
+     * @param map Tablica reprezentująca mapę
+     * @return Lista pustych miejsc
+     */
     private List<Vector> getFreeSpaces(IEntity[][] map) {
         var freeSpaces = new ArrayList<Vector>();
         for (int i = 0; i < map.length; i++) {

@@ -1,18 +1,30 @@
 package Szczurki.Simulation.Entities.Animals;
 
-import Szczurki.Simulation.Entities.Interfaces.IEntity;
 import Szczurki.Utilities.Vector;
 
-import java.util.Random;
-
+/**
+ * Klasa reprezentująca mysz
+ * przechowująca statystyki oraz preferowany ruch
+ * dla każdego przedstawiciela gatunku
+ */
 public class Mouse extends Animal{
 
+    /**
+     * @param x - położenie poziome na mapie
+     * @param y - położenie pionowe na mapie
+     * @param name - indywidualne imię danego przedstawiciela gatunku
+     */
     public Mouse(int x, int y, String name) {
-        super(x, y, name,2,3,4,5);
+        super(x, y, name,3,4,5);
     }
     public Vector choosePreferredMove(){
         return lastMove.turnLeft();
     }
+
+    /**
+     * @return Inteligencja powiększona na podstawie inteligencji sąsiadów według wzoru:
+     * (siła sąsiada * kooperacja tego zwierzaka) / 10
+     */
     @Override
     public int getIntelligence() {
         int intelligenceToReturn = this.intelligence;
@@ -25,6 +37,10 @@ public class Mouse extends Animal{
         return intelligenceToReturn;
     }
 
+    /**
+     * @return Siła powiększona na podstawie sił sąsiadów według wzoru:
+     * (siła sąsiada * kooperacja tego zwierzaka) / 10
+     */
     @Override
     public int getStrength() {
         int strengthToReturn = this.strength;

@@ -11,10 +11,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+/**
+ * klasa wczytująca zawartość mapy z pliku o zadanej nazwie
+ */
 public class MapReader implements IMapReader {
 
     ArrayList<String> labirynth = new ArrayList<>();
 
+    /**
+     * @param fileName - nazwa pliku z mapą
+     * @return - IEntity mapy
+     */
     public IEntity[][] getMap(String fileName) {
 
 

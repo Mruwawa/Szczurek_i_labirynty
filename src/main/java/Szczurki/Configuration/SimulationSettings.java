@@ -2,6 +2,9 @@ package Szczurki.Configuration;
 
 import java.util.Map;
 
+/**
+ * Klasa odpowiedzialna za trzymanie danych poszczególnych symulacji
+ */
 public class SimulationSettings {
     private String labyrinthFileName;
     private int turnCount;
