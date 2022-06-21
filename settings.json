@@ -1,6 +1,6 @@
 {
   "repeatCount": 1000,
-  "rendererType": "",
+  "rendererType": "WINDOW",
   "resultsWriterType": "CSV",
   "frameTime": 200,
   "animalNames": [
