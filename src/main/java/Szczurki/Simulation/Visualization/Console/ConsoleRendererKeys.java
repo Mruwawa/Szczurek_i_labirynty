@@ -1,6 +1,15 @@
 package Szczurki.Simulation.Visualization.Console;
 
-class ConsoleColors {
+import Szczurki.Simulation.Entities.Animals.*;
+import Szczurki.Simulation.Entities.Guardian;
+import Szczurki.Simulation.Entities.Obstacle;
+import Szczurki.Simulation.Entities.Wall;
+
+import java.util.Map;
+
+import static java.util.Map.entry;
+
+class ConsoleRendererKeys {
     public static final String RESET = "\u001B[0m";
 
     public static final String BLACK = "\u001B[30m";
@@ -20,5 +29,17 @@ class ConsoleColors {
     public static final String PURPLE_BACKGROUND = "\u001B[45m";
     public static final String CYAN_BACKGROUND = "\u001B[46m";
     public static final String WHITE_BACKGROUND = "\u001B[47m";
+
+
+    public static final Map<Class<?>, String> COLOR_MAPPINGS = Map.ofEntries(
+            entry(Guardian.class, ConsoleRendererKeys.RED_BACKGROUND + "GRL"),
+            entry(Rat.class, ConsoleRendererKeys.YELLOW_BACKGROUND + " S "),
+            entry(Mousedeer.class, ConsoleRendererKeys.BLUE_BACKGROUND + "MSJ"),
+            entry(Gerbil.class, ConsoleRendererKeys.PURPLE_BACKGROUND + " G "),
+            entry(Hamster.class, ConsoleRendererKeys.CYAN_BACKGROUND + " H "),
+            entry(Mouse.class, ConsoleRendererKeys.GREEN_BACKGROUND + " M "),
+            entry(Wall.class, ConsoleRendererKeys.BLACK_BACKGROUND + ConsoleRendererKeys.BLACK + "   "),
+            entry(Obstacle.class, ConsoleRendererKeys.BLACK_BACKGROUND + ConsoleRendererKeys.RED + "TRP")
+    );
 
 }
