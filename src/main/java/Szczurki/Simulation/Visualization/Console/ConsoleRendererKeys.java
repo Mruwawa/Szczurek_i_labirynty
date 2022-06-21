@@ -9,6 +9,10 @@ import java.util.Map;
 
 import static java.util.Map.entry;
 
+/**
+ * Klasa Zawierająca reprezentacje klas jako tekst do wyświetlenia w konsoli
+ * oraz kody ANSI kolorów w konsoli
+ */
 class ConsoleRendererKeys {
     public static final String RESET = "\u001B[0m";
 

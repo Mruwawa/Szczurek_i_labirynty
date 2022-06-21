@@ -10,7 +10,14 @@ import java.util.Map;
 
 import static java.util.Map.entry;
 
+/**
+ * Klasa zawierająca wartości z których korzysta WindowRenderer
+ */
 class WindowRendererKeys {
+    /**
+     * Lista mapująca klasy na kolory rozumiane przez
+     * bibliotekę javax.swing
+     */
     public static final Map<Class<?>, Color> COLOR_MAPPINGS = Map.ofEntries(
             entry(Guardian.class, Color.red),
             entry(Rat.class, Color.yellow),

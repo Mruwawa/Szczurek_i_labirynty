@@ -29,7 +29,9 @@ public class Keys {
     public static final char WALL_SYMBOL = '#';
     public static final char OBSTACLE_SYMBOL = '@';
 
-    //Lista klas wszystkich elementów na mapie
+    /**
+     * Lista klas wszystkich elementów, które mogą znaleźć się na planszy
+     */
     public static final List<Class<? extends IEntity>> ENTITY_CLASSES = List.of(
             Rat.class,
             Mousedeer.class,
@@ -39,6 +41,4 @@ public class Keys {
             Wall.class,
             Obstacle.class,
             Guardian.class);
-
-
 }
