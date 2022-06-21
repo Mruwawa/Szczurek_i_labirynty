@@ -4,6 +4,7 @@ import Szczurki.Configuration.SimulationSettings;
 import Szczurki.Simulation.CauseOfFinish;
 import Szczurki.Simulation.Entities.Animals.Animal;
 import Szczurki.Simulation.Entities.Interfaces.IUpdatable;
+import Szczurki.Utilities.Keys;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -11,7 +12,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class CsvResultsWriter implements IResultsWriter {
-    private final String resultsFileName = "results.csv";
+
+    private final String resultsFileName = Keys.RESULTS_FILENAME;
     private final char separator = ';';
 
     public CsvResultsWriter() {
