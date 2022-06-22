@@ -37,7 +37,7 @@ public class Mousedeer extends Animal{
         int strengthToReturn = this.strength;
 
         for (var neighbour : neighbours) {
-            if (neighbour instanceof Gerbil) {
+            if (neighbour instanceof Mousedeer) {
                 strengthToReturn += (neighbour.strength * cooperation) / 10;
             }
         }

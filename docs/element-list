@@ -1,0 +1,13 @@
+Szczurki
+Szczurki.Configuration
+Szczurki.Results
+Szczurki.Simulation
+Szczurki.Simulation.Entities
+Szczurki.Simulation.Entities.Animals
+Szczurki.Simulation.Entities.Interfaces
+Szczurki.Simulation.Setup
+Szczurki.Simulation.Visualization
+Szczurki.Simulation.Visualization.Console
+Szczurki.Simulation.Visualization.Window
+Szczurki.SimulationRunner
+Szczurki.Utilities

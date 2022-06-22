@@ -1,7 +1,8 @@
 
 # Szczurek i labirynty
 
-Projekt na programowanie obiektowe
+Projekt na programowanie obiektowe jest to symulacja agentów - zwierząt w labiryncie.
+
 
 Program można uruchomić za pomocą polecenia ```gradle run ```, lub zbudować za pomocą ```gradle jar```, a następnie uruchomić za pomocą ```java -jar Szczurek_i_labirynty-1.0-SNAPSHOT.jar``` w folderze ```Szczurek_i_labirynty\build\libs```
 
@@ -92,3 +93,25 @@ Przykładowy plik labiryntu:
 Gdzie ```#``` reprezentuje ścianę  a ```@``` reprezentuje przeszkodę
 Jeśli chcemy dodać nowy plik labiryntu należy go dodać do folderu ```labyrinths``` w tym samym folderze co plik .jar
 Musi on mieć wszystkie linijki tej samej długości.
+
+
+## Dokumentacja projektu
+[Link do dokumentacji w Javadocu](https://mruwawa.github.io/Szczurek_i_labirynty/)
+
+
+![Alt text](readme_resources/0001.jpg?raw=true)
+![Alt text](readme_resources/0002.jpg?raw=true)
+![Alt text](readme_resources/0003.jpg?raw=true)
+![Alt text](readme_resources/0004.jpg?raw=true)
+![Alt text](readme_resources/0005.jpg?raw=true)
+![Alt text](readme_resources/0006.jpg?raw=true)
+![Alt text](readme_resources/0007.jpg?raw=true)
+![Alt text](readme_resources/0008.jpg?raw=true)
+![Alt text](readme_resources/0009.jpg?raw=true)
+![Alt text](readme_resources/0010.jpg?raw=true)
+![Alt text](readme_resources/0011.jpg?raw=true)
+![Alt text](readme_resources/0012.jpg?raw=true)
+![Alt text](readme_resources/0013.jpg?raw=true)
+![Alt text](readme_resources/0014.jpg?raw=true)
+![Alt text](readme_resources/0015.jpg?raw=true)
+![Alt text](readme_resources/0016.jpg?raw=true)
